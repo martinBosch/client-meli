@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MeLi</string>
+    <string name="facebook_app_id">458260084678984</string>
+    <string name="fb_login_protocol_scheme">fb458260084678984</string>
+    <string name="cancel_login">Se canceló la operación</string>
+    <string name="error_login">Ocurrió un error al ingresar</string>
+    <string name="logout">Cerrar sesión</string>
+</resources>
