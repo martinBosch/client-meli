@@ -5,4 +5,5 @@
     <string name="cancel_login">Se canceló la operación</string>
     <string name="error_login">Ocurrió un error al ingresar</string>
     <string name="logout">Cerrar sesión</string>
+    <string name="bienvenida">¡Bienvenido a MeLi!</string>
 </resources>
