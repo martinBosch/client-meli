@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -23,14 +22,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+    }
+
+    public void loginWithFacebook(View view) {
         callbackManager = CallbackManager.Factory.create();
 
-        loginButton = (LoginButton) findViewById(R.id.loginButton);
+        loginButton = (LoginButton) findViewById(R.id.loginFbButton);
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 goMainScreen();
-
             }
 
             @Override
@@ -57,8 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    // Called when the user taps the register button
-    public void register(View view) {
+    public void registerWithEmail(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }

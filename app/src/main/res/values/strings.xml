@@ -6,4 +6,12 @@
     <string name="error_login">Ocurrió un error al ingresar</string>
     <string name="logout">Cerrar sesión</string>
     <string name="bienvenida">¡Bienvenido a MeLi!</string>
+    <string name="email">E-mail</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="registrarme_email">Registrarme con mi e-mail</string>
+    <string name="completar_datos">Completá tus datos</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="registrarme">Registrarme</string>
 </resources>

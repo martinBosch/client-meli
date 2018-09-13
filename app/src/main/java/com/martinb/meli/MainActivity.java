@@ -15,9 +15,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (AccessToken.getCurrentAccessToken() == null) {
+        if (!userIsLoggedin()) {
             goLoginScreen();
         }
+    }
+
+    private boolean userIsLoggedin() {
+        return AccessToken.getCurrentAccessToken() != null;
     }
 
     private void goLoginScreen() {
