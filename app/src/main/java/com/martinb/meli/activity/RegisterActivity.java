@@ -1,7 +1,9 @@
-package com.martinb.meli;
+package com.martinb.meli.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.martinb.meli.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
