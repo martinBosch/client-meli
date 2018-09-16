@@ -1,4 +1,4 @@
-package com.martinb.meli;
+package com.martinb.meli.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,9 +7,10 @@ import android.view.View;
 
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
+import com.martinb.meli.R;
+import com.martinb.meli.activity.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
