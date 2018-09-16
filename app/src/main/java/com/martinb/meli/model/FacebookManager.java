@@ -11,13 +11,16 @@ import org.json.JSONObject;
 
 public class FacebookManager {
 
-    public static void manageProfileInfo(LoginResult loginResult) {
+    private String email;
+    private String name;
+
+    public void requestProfileInfo(LoginResult loginResult) {
         GraphRequest request = GraphRequest.newMeRequest(
                 loginResult.getAccessToken(),
                 new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
-                        getProfileInfo(object);
+                        saveProfileInfo(object);
                     }
                 });
         Bundle parameters = new Bundle();
@@ -26,10 +29,10 @@ public class FacebookManager {
         request.executeAsync();
     }
 
-    private static void getProfileInfo(JSONObject jsonObject) {
+    private void saveProfileInfo(JSONObject jsonObject) {
         try {
-            String email = jsonObject.getString("email");
-            String name = jsonObject.getString("name");
+            email = jsonObject.getString("email");
+            name = jsonObject.getString("name");
 
 //            profilePictureView.setPresetSize(ProfilePictureView.NORMAL);
 //            profilePictureView.setProfileId(jsonObject.getString("id"));

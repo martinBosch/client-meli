@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -51,7 +52,8 @@ public class LoginActivity extends AppCompatActivity {
         loginFbButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                FacebookManager.manageProfileInfo(loginResult);
+                FacebookManager fbManager = new FacebookManager();
+                fbManager.requestProfileInfo(loginResult);
                 goMainScreen();
             }
 
@@ -80,6 +82,14 @@ public class LoginActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                 Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    public void login(View view) {
+        EditText editTextEmail = (EditText) findViewById(R.id.input_email);
+        String email = editTextEmail.getText().toString();
+
+        EditText editTextPassword = (EditText) findViewById(R.id.input_password);
+        String password = editTextPassword.getText().toString();
     }
 
 }
