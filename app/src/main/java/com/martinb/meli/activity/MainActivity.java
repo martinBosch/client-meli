@@ -8,35 +8,26 @@ import android.view.View;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.martinb.meli.R;
-import com.martinb.meli.request.AppServer;
-import com.martinb.meli.request.AppServerRequests;
-import com.martinb.meli.request.RetrofitClient;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
+import com.martinb.meli.authentication.AccountAuthenticator;
 
 
 public class MainActivity extends AppCompatActivity {
-
-    private static final String TAG = "MyActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        AppServer appserver = new AppServer();
-        appserver.helloWord();
-
-        if (!userIsLoggedin()) {
+        boolean logged = userIsLoggedin();
+        if (!logged) {
             goLoginScreen();
         }
     }
 
     private boolean userIsLoggedin() {
-        return AccessToken.getCurrentAccessToken() != null;
+        boolean loginFacebook = AccessToken.getCurrentAccessToken()!=null;
+        boolean loginApp = AccountAuthenticator.getAuthToken(this)!=null;
+        return loginFacebook || loginApp;
     }
 
     private void goLoginScreen() {
@@ -46,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logout(View view) {
+        AccountAuthenticator.logOut(this);
         LoginManager.getInstance().logOut();
         goLoginScreen();
     }

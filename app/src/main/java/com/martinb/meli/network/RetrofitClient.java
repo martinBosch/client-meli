@@ -1,4 +1,4 @@
-package com.martinb.meli.request;
+package com.martinb.meli.network;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

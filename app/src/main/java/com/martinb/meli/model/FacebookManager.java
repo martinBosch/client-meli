@@ -11,9 +11,6 @@ import org.json.JSONObject;
 
 public class FacebookManager {
 
-    private String email;
-    private String name;
-
     public void requestProfileInfo(LoginResult loginResult) {
         GraphRequest request = GraphRequest.newMeRequest(
                 loginResult.getAccessToken(),
@@ -31,8 +28,11 @@ public class FacebookManager {
 
     private void saveProfileInfo(JSONObject jsonObject) {
         try {
-            email = jsonObject.getString("email");
-            name = jsonObject.getString("name");
+            String email = jsonObject.getString("email");
+            String name = jsonObject.getString("name");
+
+//            AppServer appserver = new AppServer();
+//            appserver.signup(email, 12345678);
 
 //            profilePictureView.setPresetSize(ProfilePictureView.NORMAL);
 //            profilePictureView.setProfileId(jsonObject.getString("id"));

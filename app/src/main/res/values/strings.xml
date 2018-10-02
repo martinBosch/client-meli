@@ -14,4 +14,6 @@
     <string name="nombre">Nombre</string>
     <string name="apellido">Apellido</string>
     <string name="registrarme">Registrarme</string>
+    <string name="com_martinb_meli">com.martinb.meli</string>
+    <string name="account_type">com.martinb.meli</string>
 </resources>
