@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
         boolean logged = userIsLoggedin();
         if (!logged) {
             goLoginScreen();
+        } else {
+            goHomeScreen();
         }
     }
 
@@ -32,6 +34,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void goLoginScreen() {
         Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    private void goHomeScreen() {
+        Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }

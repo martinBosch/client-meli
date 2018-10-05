@@ -46,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void signup(String email, String password) {
         AppServer appserver = new AppServer();
-        appserver.setContext(RegisterActivity.this, this);
+        appserver.setContext(this);
         appserver.signup(email, password);
     }
 

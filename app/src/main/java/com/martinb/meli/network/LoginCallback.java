@@ -1,8 +1,10 @@
 package com.martinb.meli.network;
 
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
+import com.martinb.meli.activity.HomeActivity;
 import com.martinb.meli.activity.LoginActivity;
 import com.martinb.meli.authentication.AccountAuthenticator;
 
@@ -14,11 +16,9 @@ import retrofit2.Response;
 
 public class LoginCallback implements Callback<UserResponse> {
 
-    private LoginActivity loginActivity;
     private Context loginContext;
 
-    public LoginCallback(LoginActivity loginActivity, Context loginContext) {
-        this.loginActivity = loginActivity;
+    public LoginCallback(Context loginContext) {
         this.loginContext = loginContext;
     }
 
@@ -30,7 +30,7 @@ public class LoginCallback implements Callback<UserResponse> {
             String password = r.getPassword();
             String token = r.getToken();
             AccountAuthenticator.createAccount(loginContext, email, password, token);
-            loginActivity.goMainScreen();
+            goMainScreen();
         } else {
             try {
                 JSONObject jObjError = new JSONObject(response.errorBody().string());
@@ -46,4 +46,11 @@ public class LoginCallback implements Callback<UserResponse> {
     public void onFailure(Call<UserResponse> call, Throwable t) {
         Toast.makeText(loginContext, t.getMessage(), Toast.LENGTH_SHORT).show();
     }
+
+    private void goMainScreen() {
+        Intent intent = new Intent(loginContext, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        loginContext.startActivity(intent);
+    }
+
 }

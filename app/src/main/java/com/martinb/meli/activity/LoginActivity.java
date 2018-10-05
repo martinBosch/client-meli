@@ -33,14 +33,10 @@ public class LoginActivity extends AppCompatActivity {
     private LoginButton loginFbButton;
     private CallbackManager callbackManager;
 
-    private Context mContext;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        mContext = this;
     }
 
     public void registerWithEmail(View view) {
@@ -92,12 +88,12 @@ public class LoginActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString();
 
         AppServer appserver = new AppServer();
-        appserver.setContext(LoginActivity.this, this);
+        appserver.setContext(this);
         appserver.login(email, password);
     }
 
     public void goMainScreen() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                 Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);

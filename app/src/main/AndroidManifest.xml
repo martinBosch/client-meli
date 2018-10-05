@@ -43,9 +43,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.RegisterActivity"></activity>
+        <activity android:name=".activity.RegisterActivity" />
+
         <service
-            android:name="com.martinb.meli.authentication.AuthenticatorService"
+            android:name=".authentication.AuthenticatorService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -56,5 +57,14 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" /> <!-- We haven't defined this -->
         </service>
+
+        <activity
+            android:name=".activity.HomeActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.ProductDetailsActivity"
+            android:label="@string/title_activity_product_details"
+            android:theme="@style/AppTheme"></activity>
     </application>
+
 </manifest>

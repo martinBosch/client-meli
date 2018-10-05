@@ -1,8 +1,11 @@
 package com.martinb.meli.network;
 
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
+import com.martinb.meli.activity.HomeActivity;
+import com.martinb.meli.activity.LoginActivity;
 import com.martinb.meli.activity.RegisterActivity;
 import com.martinb.meli.authentication.AccountAuthenticator;
 
@@ -14,11 +17,9 @@ import retrofit2.Response;
 
 public class SignUpCallback implements Callback<UserResponse> {
 
-    private RegisterActivity registerActivity;
     private Context registerContext;
 
-    public SignUpCallback(RegisterActivity registerActivity, Context registerContext) {
-        this.registerActivity = registerActivity;
+    public SignUpCallback(Context registerContext) {
         this.registerContext = registerContext;
     }
 
@@ -30,7 +31,7 @@ public class SignUpCallback implements Callback<UserResponse> {
             String password = r.getPassword();
             String token = r.getToken();
             AccountAuthenticator.createAccount(registerContext, email, password, token);
-            registerActivity.goMainScreen();
+            goMainScreen();
         } else {
             try {
                 JSONObject jObjError = new JSONObject(response.errorBody().string());
@@ -45,5 +46,11 @@ public class SignUpCallback implements Callback<UserResponse> {
     @Override
     public void onFailure(Call<UserResponse> call, Throwable t) {
         Toast.makeText(registerContext, t.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    private void goMainScreen() {
+        Intent intent = new Intent(registerContext, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        registerContext.startActivity(intent);
     }
 }
