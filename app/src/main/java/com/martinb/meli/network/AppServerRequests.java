@@ -11,8 +11,8 @@ public interface AppServerRequests {
     Call<String> helloWord();
 
     @POST("/signup")
-    Call<UserResponse> signup(@Body User user);
+    Call<AuthenticationResponse> signup(@Body User user);
 
     @POST("/login")
-    Call<UserResponse> login(@Body User user);
+    Call<User> login(@Body User user);
 }

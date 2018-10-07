@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.martinb.meli.activity.HomeActivity;
-import com.martinb.meli.activity.LoginActivity;
-import com.martinb.meli.activity.RegisterActivity;
-import com.martinb.meli.authentication.AccountAuthenticator;
 
 import org.json.JSONObject;
 
@@ -15,7 +12,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SignUpCallback implements Callback<UserResponse> {
+public class SignUpCallback implements Callback<AuthenticationResponse> {
 
     private Context registerContext;
 
@@ -24,13 +21,13 @@ public class SignUpCallback implements Callback<UserResponse> {
     }
 
     @Override
-    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+    public void onResponse(Call<AuthenticationResponse> call, Response<AuthenticationResponse> response) {
         if (response.isSuccessful()) {
-            UserResponse r = response.body();
-            String email = r.getEmail();
-            String password = r.getPassword();
-            String token = r.getToken();
-            AccountAuthenticator.createAccount(registerContext, email, password, token);
+            AuthenticationResponse r = response.body();
+//            String email = r.getEmail();
+//            String password = r.getPassword();
+//            String token = r.getToken();
+//            AccountAuthenticator.createAccount(registerContext, email, password, token);
             goMainScreen();
         } else {
             try {
@@ -44,7 +41,7 @@ public class SignUpCallback implements Callback<UserResponse> {
     }
 
     @Override
-    public void onFailure(Call<UserResponse> call, Throwable t) {
+    public void onFailure(Call<AuthenticationResponse> call, Throwable t) {
         Toast.makeText(registerContext, t.getMessage(), Toast.LENGTH_SHORT).show();
     }
 

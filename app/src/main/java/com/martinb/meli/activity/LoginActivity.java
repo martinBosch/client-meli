@@ -1,7 +1,9 @@
 package com.martinb.meli.activity;
 
-import android.content.Context;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,27 +18,24 @@ import com.facebook.login.widget.LoginButton;
 import com.martinb.meli.R;
 import com.martinb.meli.authentication.AccountAuthenticator;
 import com.martinb.meli.model.FacebookManager;
-import com.martinb.meli.network.UserResponse;
+import com.martinb.meli.network.AuthenticationResponse;
 import com.martinb.meli.network.User;
-import com.martinb.meli.network.AppServer;
-
-import org.json.JSONObject;
+import com.martinb.meli.view_model.LoginViewModel;
 
 import java.util.Arrays;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginButton loginFbButton;
     private CallbackManager callbackManager;
+    private LoginViewModel loginViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
     }
 
     public void registerWithEmail(View view) {
@@ -87,12 +86,27 @@ public class LoginActivity extends AppCompatActivity {
         EditText editTextPassword = (EditText) findViewById(R.id.input_password);
         String password = editTextPassword.getText().toString();
 
-        AppServer appserver = new AppServer();
-        appserver.setContext(this);
-        appserver.login(email, password);
+        loginViewModel.login(email, password).observe(this, new Observer<AuthenticationResponse>() {
+            @Override
+            public void onChanged(@Nullable AuthenticationResponse authenticationResponse) {
+                if (authenticationResponse.isSuccessful()) {
+                    User user = authenticationResponse.getUser();
+                    AccountAuthenticator.createAccount(LoginActivity.this,
+                            user.getEmail(), user.getPassword(), user.getToken());
+                    goMainScreen();
+                } else {
+                    String e = authenticationResponse.getErrorMessage();
+                    showErrorMessage(e);
+                }
+            }
+        });
     }
 
-    public void goMainScreen() {
+    private void showErrorMessage(String e) {
+        Toast.makeText(this, e, Toast.LENGTH_SHORT).show();
+    }
+
+    private void goMainScreen() {
         Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                 Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

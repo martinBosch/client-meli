@@ -25,4 +25,5 @@
     <string name="account">Mi cuenta</string>
     <string name="sell">Vender gratis</string>
     <string name="title_activity_product_details">ProductDetailsActivity</string>
+    <string name="producto">Producto</string>
 </resources>
