@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.martinb.meli.R;
+import com.martinb.meli.adapter.RecyclerViewAdapter;
 import com.martinb.meli.model.Product;
 
 import java.util.ArrayList;

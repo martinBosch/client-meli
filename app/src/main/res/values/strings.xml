@@ -26,4 +26,10 @@
     <string name="sell">Vender gratis</string>
     <string name="title_activity_product_details">ProductDetailsActivity</string>
     <string name="producto">Producto</string>
+    <string name="descirption">Descripcion</string>
+    <string name="categoria">Categoria</string>
+    <string name="cantidad">Cantidad:</string>
+    <string name="info_seller">Información del vendedor</string>
+    <string name="ubication_seller">Ubicación</string>
+    <string name="opinions">Opiniones sobre este producto</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.martinb.meli.activity;
+package com.martinb.meli.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

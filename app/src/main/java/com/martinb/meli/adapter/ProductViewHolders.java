@@ -1,4 +1,4 @@
-package com.martinb.meli.activity;
+package com.martinb.meli.adapter;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.martinb.meli.R;
+import com.martinb.meli.activity.ProductDetailsActivity;
 
 public class ProductViewHolders extends RecyclerView.ViewHolder implements View.OnClickListener {
 
