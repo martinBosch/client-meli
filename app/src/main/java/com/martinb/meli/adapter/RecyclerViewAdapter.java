@@ -7,16 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.martinb.meli.R;
-import com.martinb.meli.model.Product;
+import com.martinb.meli.model.ProductItem;
 
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<ProductViewHolders> {
 
-    private List<Product> products;
+    private List<ProductItem> products;
     private Context context;
 
-    public RecyclerViewAdapter(Context context, List<Product> products) {
+    public RecyclerViewAdapter(Context context, List<ProductItem> products) {
         this.products = products;
         this.context = context;
     }
@@ -30,10 +30,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ProductViewHolders
 
     @Override
     public void onBindViewHolder(ProductViewHolders holder, int position) {
-        Product product = products.get(position);
-        holder.image.setImageResource(product.getImage());
-        holder.price.setText(product.getPrice());
+        ProductItem product = products.get(position);
+//        holder.image.setImageResource(product.getEncodedThumbnail());
+        holder.image.setImageBitmap(product.getThumbnail());
+        holder.price.setText( String.format("$ %s", product.getPrice()) );
         holder.title.setText(product.getTitle());
+        holder.setId(product.getId());
     }
 
     @Override

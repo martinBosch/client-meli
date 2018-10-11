@@ -1,6 +1,10 @@
 package com.martinb.meli.activity;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,12 +18,15 @@ import android.widget.Toast;
 
 import com.martinb.meli.R;
 import com.martinb.meli.adapter.RecyclerViewAdapter;
-import com.martinb.meli.model.Product;
+import com.martinb.meli.authentication.AccountAuthenticator;
+import com.martinb.meli.model.ProductItem;
+import com.martinb.meli.view_model.HomeViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
+
+    private HomeViewModel homeViewModel;
 
     private DrawerLayout drawer;
     private Toolbar toolbar;
@@ -29,19 +36,14 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        configureToolbar();
-        configureNavigationDrawer();
-        configureProductsGrid();
-        }
+        this.homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
 
-    private void configureToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setupToolbar();
+        setupNavigationDrawer();
+        setupProductsGrid();
     }
 
-    private void configureNavigationDrawer() {
+    private void setupNavigationDrawer() {
         drawer = (DrawerLayout) findViewById(R.id.home_main);
         NavigationView navView = (NavigationView) findViewById(R.id.nv);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -54,12 +56,25 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.account:
                         Toast.makeText(HomeActivity.this, "Account", Toast.LENGTH_SHORT).show();
                     case R.id.sell:
+                        goPublischScreen();
                         Toast.makeText(HomeActivity.this, "Sell", Toast.LENGTH_SHORT).show();
                 }
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             }
         });
+    }
+
+    private void goPublischScreen() {
+        Intent intent = new Intent(this, PublishProductActivity.class);
+        startActivity(intent);
+    }
+
+    private void setupToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -85,15 +100,29 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private void configureProductsGrid() {
+    private void setupProductsGrid() {
+        String token = AccountAuthenticator.getAuthToken(HomeActivity.this);
+        homeViewModel.getPublishedProduct(token).observe(this, new Observer<ArrayList<ProductItem>>() {
+            @Override
+            public void onChanged(@Nullable ArrayList<ProductItem> products) {
+                if (products != null) {
+                    String token = homeViewModel.getToken();
+//                    AccountAuthenticator.updateAuthToken(HomeActivity.this, token);
+                    _setupProductsGrid(products);
+                } else {
+                    String e = homeViewModel.getErrorMsj();
+                    showMessage(e);
+                }
+            }
+        });
+    }
+
+    private void _setupProductsGrid(ArrayList<ProductItem> products) {
         StaggeredGridLayoutManager recyclerViewLayoutManager = new StaggeredGridLayoutManager(2, 1);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(recyclerViewLayoutManager);
-
-        List<Product> products = getListItemData();
-
         RecyclerViewAdapter recyclerAdapter = new RecyclerViewAdapter(HomeActivity.this, products);
         recyclerView.setAdapter(recyclerAdapter);
     }
@@ -108,40 +137,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-
-    private List<Product> getListItemData(){
-        List<Product> listViewItems = new ArrayList<Product>();
-
-        Product product1 = new Product(R.drawable.one, "$10", "bbbbbbb cccccccccc ddddddd");
-        Product product2 = new Product(R.drawable.two, "$20", "bbbbbbb cccccccccc");
-        listViewItems.add(product1);
-        listViewItems.add(product2);
-
-        product1 = new Product(R.drawable.three, "$10", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        product2 = new Product(R.drawable.four, "$20", "bbbbbbb cccccccccc");
-        listViewItems.add(product1);
-        listViewItems.add(product2);
-
-        product1 = new Product(R.drawable.one, "$10", "bbbbbbb cccccccccc");
-        product2 = new Product(R.drawable.two, "$20", "bbbbbbb cccccccccc");
-        listViewItems.add(product1);
-        listViewItems.add(product2);
-
-        product1 = new Product(R.drawable.three, "$10", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        product2 = new Product(R.drawable.four, "$20", "bbbbbbb cccccccccc");
-        listViewItems.add(product1);
-        listViewItems.add(product2);
-
-        product1 = new Product(R.drawable.one, "$10", "bbbbbbb cccccccccc");
-        product2 = new Product(R.drawable.two, "$20", "bbbbbbb cccccccccc");
-        listViewItems.add(product1);
-        listViewItems.add(product2);
-
-        product1 = new Product(R.drawable.three, "$10", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        product2 = new Product(R.drawable.four, "$20", "bbbbbbb cccccccccc");
-        listViewItems.add(product1);
-        listViewItems.add(product2);
-
-        return listViewItems;
+    private void showMessage(String msj) {
+        Toast.makeText(this, msj, Toast.LENGTH_SHORT).show();
     }
 }

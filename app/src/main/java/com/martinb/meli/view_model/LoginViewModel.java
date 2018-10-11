@@ -6,8 +6,8 @@ import android.arch.lifecycle.ViewModel;
 
 import com.martinb.meli.network.AppServerRequestFactory;
 import com.martinb.meli.network.AppServerRequests;
-import com.martinb.meli.network.AuthenticationResponse;
-import com.martinb.meli.network.User;
+import com.martinb.meli.network.object_response.AuthenticationResponse;
+import com.martinb.meli.network.object_response.User;
 
 import org.json.JSONObject;
 

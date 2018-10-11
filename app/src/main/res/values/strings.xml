@@ -32,4 +32,15 @@
     <string name="info_seller">Información del vendedor</string>
     <string name="ubication_seller">Ubicación</string>
     <string name="opinions">Opiniones sobre este producto</string>
+    <string name="agregarFoto">Agregar foto</string>
+    <string name="nombre_producto">Nombre</string>
+    <string name="price">Precio</string>
+    <string name="price_sign">$</string>
+    <string name="units">Unidades disponibles</string>
+    <string name="credit_card">Tarjeta de crédito</string>
+    <string name="debit_card">Tarjeta de débito</string>
+    <string name="cash">Efectivo</string>
+    <string name="publish">Publicar</string>
+    <string name="payment_methods">Medios de pago</string>
+    <string name="ubication_title">Ubicación</string>
 </resources>

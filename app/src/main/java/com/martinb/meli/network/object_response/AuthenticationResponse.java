@@ -1,4 +1,4 @@
-package com.martinb.meli.network;
+package com.martinb.meli.network.object_response;
 
 public class AuthenticationResponse {
 

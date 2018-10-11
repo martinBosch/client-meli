@@ -6,8 +6,8 @@ import android.arch.lifecycle.ViewModel;
 
 import com.martinb.meli.network.AppServerRequestFactory;
 import com.martinb.meli.network.AppServerRequests;
-import com.martinb.meli.network.AuthenticationResponse;
-import com.martinb.meli.network.User;
+import com.martinb.meli.network.object_response.AuthenticationResponse;
+import com.martinb.meli.network.object_response.User;
 
 import org.json.JSONObject;
 
@@ -21,8 +21,9 @@ public class RegisterViewModel extends ViewModel {
 
     public LiveData<AuthenticationResponse> signup(String email, String password) {
         User user = new User(email, password, null);
+
         AppServerRequests appserverRequests = AppServerRequestFactory.getInstance();
-        Call<User> call = appserverRequests.login(user);
+        Call<User> call = appserverRequests.signup(user);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {

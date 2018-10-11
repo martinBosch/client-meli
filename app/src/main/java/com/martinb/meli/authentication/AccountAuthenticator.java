@@ -81,6 +81,17 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
         return token;
     }
 
+    public static void updateAuthToken(Context context, String newToken) {
+        AccountManager accountManager = AccountManager.get(context);
+        Account[] accounts = accountManager.getAccounts();
+        if (accounts.length == 0) {
+            return;
+        }
+
+        Account account = accounts[0];
+        accountManager.setAuthToken(account, ARG_AUTH_TOKEN_TYPE, newToken);
+    }
+
     public static void logOut(Context context) {
         AccountManager accountManager = AccountManager.get(context);
         Account[] accounts = accountManager.getAccounts();
