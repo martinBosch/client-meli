@@ -14,6 +14,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.martinb.meli.R;
@@ -118,6 +119,7 @@ public class HomeActivity extends AppCompatActivity {
                     String token = homeViewModel.getToken();
 //                    AccountAuthenticator.updateAuthToken(HomeActivity.this, token);
                     _setupProductsGrid(products);
+                    findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                 } else {
                     String e = homeViewModel.getErrorMsj();
                     showMessage(e);

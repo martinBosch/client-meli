@@ -63,6 +63,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 if (product != null) {
                     String token = productDetailsViewModel.getToken();
 //                    AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
+                    findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                     _setupProductDetails(product);
                 } else {
                     String e = productDetailsViewModel.getErrorMsj();
@@ -73,6 +74,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
     private void _setupProductDetails(Product product) {
+        findViewById(R.id.product_details).setVisibility(View.VISIBLE);
+
         TextView titulo = findViewById(R.id.title);
         titulo.setText(product.getName());
 
