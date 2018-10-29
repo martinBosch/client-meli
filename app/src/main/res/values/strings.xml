@@ -43,4 +43,14 @@
     <string name="publish">Publicar</string>
     <string name="payment_methods">Medios de pago</string>
     <string name="ubication_title">Ubicación</string>
+    <string name="micuenta">Mi cuenta</string>
+    <string name="myshppings">Compras</string>
+    <string name="shopping_title">Compras</string>
+    <string name="myshoppings">Mis compras</string>
+    <string name="sell_title">Ventas</string>
+    <string name="my_sells">Mis ventas</string>
+    <string name="data">Datos</string>
+    <string name="my_data">Mis datos</string>
+    <string name="profile">Perfil</string>
+    <string name="welcome">¡Bienvenido!</string>
 </resources>

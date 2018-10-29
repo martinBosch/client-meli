@@ -53,11 +53,15 @@ public class HomeActivity extends AppCompatActivity {
                 switch (itemId) {
                     case R.id.user:
                         Toast.makeText(HomeActivity.this, "User", Toast.LENGTH_SHORT).show();
+                        break;
                     case R.id.account:
-                        Toast.makeText(HomeActivity.this, "Account", Toast.LENGTH_SHORT).show();
+                        goMyAccountScreen();
+//                        Toast.makeText(HomeActivity.this, "Account", Toast.LENGTH_SHORT).show();
+                        break;
                     case R.id.sell:
                         goPublischScreen();
-                        Toast.makeText(HomeActivity.this, "Sell", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(HomeActivity.this, "Sell", Toast.LENGTH_SHORT).show();
+                        break;
                 }
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
@@ -67,6 +71,11 @@ public class HomeActivity extends AppCompatActivity {
 
     private void goPublischScreen() {
         Intent intent = new Intent(this, PublishProductActivity.class);
+        startActivity(intent);
+    }
+
+    private void goMyAccountScreen() {
+        Intent intent = new Intent(this, MyAccountActivity.class);
         startActivity(intent);
     }
 
@@ -93,7 +102,7 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             case android.R.id.home:
                 drawer.openDrawer(GravityCompat.START);
-                Toast.makeText(HomeActivity.this, "Navigation", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(HomeActivity.this, "Navigation", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
