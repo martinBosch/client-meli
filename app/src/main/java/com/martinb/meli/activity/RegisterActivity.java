@@ -12,8 +12,6 @@ import android.widget.Toast;
 
 import com.martinb.meli.R;
 import com.martinb.meli.authentication.AccountAuthenticator;
-import com.martinb.meli.network.object_response.AuthenticationResponse;
-import com.martinb.meli.network.object_response.User;
 import com.martinb.meli.view_model.RegisterViewModel;
 
 public class RegisterActivity extends AppCompatActivity {

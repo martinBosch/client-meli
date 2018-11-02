@@ -1,4 +1,4 @@
-package com.martinb.meli.network.object_response;
+package com.martinb.meli.network.object_request;
 
 public class User {
 

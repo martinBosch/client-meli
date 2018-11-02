@@ -6,8 +6,7 @@ import android.arch.lifecycle.ViewModel;
 
 import com.martinb.meli.network.AppServerRequestFactory;
 import com.martinb.meli.network.AppServerRequests;
-import com.martinb.meli.network.object_request.Product;
-import com.martinb.meli.network.object_response.User;
+import com.martinb.meli.network.object_request.User;
 
 import org.json.JSONObject;
 

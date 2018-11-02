@@ -3,9 +3,7 @@ package com.martinb.meli.network;
 import com.martinb.meli.model.ProductItem;
 import com.martinb.meli.network.object_request.Product;
 import com.martinb.meli.network.object_request.PublishRequest;
-import com.martinb.meli.network.object_response.ProductPublishedResponse;
-import com.martinb.meli.network.object_response.PublishResponse;
-import com.martinb.meli.network.object_response.User;
+import com.martinb.meli.network.object_request.User;
 
 import java.util.ArrayList;
 

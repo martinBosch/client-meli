@@ -9,7 +9,6 @@ import com.martinb.meli.model.ImageManager;
 import com.martinb.meli.model.ProductItem;
 import com.martinb.meli.network.AppServerRequestFactory;
 import com.martinb.meli.network.AppServerRequests;
-import com.martinb.meli.network.object_response.ProductPublishedResponse;
 
 import org.json.JSONObject;
 

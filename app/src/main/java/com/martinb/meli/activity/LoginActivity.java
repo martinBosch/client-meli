@@ -18,8 +18,6 @@ import com.facebook.login.widget.LoginButton;
 import com.martinb.meli.R;
 import com.martinb.meli.authentication.AccountAuthenticator;
 import com.martinb.meli.model.FacebookManager;
-import com.martinb.meli.network.object_response.AuthenticationResponse;
-import com.martinb.meli.network.object_response.User;
 import com.martinb.meli.view_model.LoginViewModel;
 
 import java.util.Arrays;

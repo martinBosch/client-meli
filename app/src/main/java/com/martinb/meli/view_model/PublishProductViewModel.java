@@ -8,7 +8,6 @@ import com.martinb.meli.network.AppServerRequestFactory;
 import com.martinb.meli.network.AppServerRequests;
 import com.martinb.meli.network.object_request.Product;
 import com.martinb.meli.network.object_request.PublishRequest;
-import com.martinb.meli.network.object_response.PublishResponse;
 
 import org.json.JSONObject;
 
