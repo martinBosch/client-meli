@@ -6,7 +6,7 @@ import android.arch.lifecycle.ViewModel;
 
 import com.martinb.meli.network.AppServerRequestFactory;
 import com.martinb.meli.network.AppServerRequests;
-import com.martinb.meli.network.object_response.AuthenticationResponse;
+import com.martinb.meli.network.object_request.Product;
 import com.martinb.meli.network.object_response.User;
 
 import org.json.JSONObject;
@@ -17,16 +17,19 @@ import retrofit2.Response;
 
 public class RegisterViewModel extends ViewModel {
 
-    private MutableLiveData<AuthenticationResponse> data = new MutableLiveData<>();
+    private static final String ERROR_MSJ = "description";
 
-    public LiveData<AuthenticationResponse> signup(String email, String password) {
-        User user = new User(email, password, null);
+    private MutableLiveData<String> token = new MutableLiveData<>();
+    private String errorMsj = null;
+
+    public LiveData<String> signup(String email, String password, String displayName, String phone) {
+        User user = new User(email, password, displayName, phone);
 
         AppServerRequests appserverRequests = AppServerRequestFactory.getInstance();
-        Call<User> call = appserverRequests.signup(user);
-        call.enqueue(new Callback<User>() {
+        Call<Void> call = appserverRequests.signup(user);
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     handleGoodRequest(response);
                 } else {
@@ -35,25 +38,30 @@ public class RegisterViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                data.setValue(new AuthenticationResponse(null, t.getMessage()));
+            public void onFailure(Call<Void> call, Throwable t) {
+                token.setValue(null);
+                errorMsj = t.getMessage();
             }
         });
-        return data;
+        return token;
     }
 
-    private void handleGoodRequest(Response<User> response) {
-        User user = response.body();
-        data.setValue(new AuthenticationResponse(user, null));
+    private void handleGoodRequest(Response<Void> response) {
+        okhttp3.Headers headers = response.headers();
+        token.setValue( headers.get("Bearer") );
     }
 
-    private void handleBadRequest(Response<User> response) {
+    private void handleBadRequest(Response<Void> response) {
+        token.setValue(null);
         try {
             JSONObject jObjError = new JSONObject(response.errorBody().string());
-            String errorMessage = jObjError.getString("description");
-            data.setValue(new AuthenticationResponse(null, errorMessage));
+            errorMsj = jObjError.getString(ERROR_MSJ);
         } catch (Exception e) {
-            data.setValue(new AuthenticationResponse(null, e.getMessage()));
+            errorMsj = e.getMessage();
         }
+    }
+
+    public String getErrorMsj() {
+        return errorMsj;
     }
 }

@@ -38,23 +38,25 @@ public class RegisterActivity extends AppCompatActivity {
         EditText editTextEmail = (EditText) findViewById(R.id.input_email);
         String email = editTextEmail.getText().toString();
 
+        EditText editTextPhone = (EditText) findViewById(R.id.input_phone);
+        String phone = editTextPhone.getText().toString();
+
         EditText editTextPassword = (EditText) findViewById(R.id.input_password);
         String password = editTextPassword.getText().toString();
 
-        signup(email, password);
+        AccountAuthenticator.createAccount(this, email, password);
+        signup(email, password, name + " " + lastName, phone);
     }
 
-    private void signup(String email, String password) {
-        registerViewModel.signup(email, password).observe(this, new Observer<AuthenticationResponse>() {
+    private void signup(String email, String password, String displayName, String phone) {
+        registerViewModel.signup(email, password, displayName, phone).observe(this, new Observer<String>() {
             @Override
-            public void onChanged(@Nullable AuthenticationResponse authenticationResponse) {
-                if (authenticationResponse.isSuccessful()) {
-                    User user = authenticationResponse.getUser();
-                    AccountAuthenticator.createAccount(RegisterActivity.this,
-                            user.getEmail(), user.getPassword(), user.getToken());
+            public void onChanged(@Nullable String token) {
+                if (token != null) {
+                    AccountAuthenticator.setAuthToken(RegisterActivity.this, token);
                     goMainScreen();
                 } else {
-                    String e = authenticationResponse.getErrorMessage();
+                    String e = registerViewModel.getErrorMsj();
                     showErrorMessage(e);
                 }
             }

@@ -9,12 +9,14 @@ public class Product {
     private String _id;
     private String name;
     private String description;
-    private ArrayList<String> images;
-    private ArrayList<Bitmap> desencodedImages;
     private float price;
+    private ArrayList<String> images;
     private String category;
     private String ubication;
     private int units;
+    private String owner_id;
+
+    private ArrayList<Bitmap> desencodedImages;
 
     public Product(String name, String description, ArrayList<String> images,
                    float price, String category, String ubication, int units) {

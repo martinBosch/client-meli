@@ -86,16 +86,16 @@ public class LoginActivity extends AppCompatActivity {
         EditText editTextPassword = (EditText) findViewById(R.id.input_password);
         String password = editTextPassword.getText().toString();
 
-        loginViewModel.login(email, password).observe(this, new Observer<AuthenticationResponse>() {
+        AccountAuthenticator.createAccount(this, email, password);
+
+        loginViewModel.login(email, password).observe(this, new Observer<String>() {
             @Override
-            public void onChanged(@Nullable AuthenticationResponse authenticationResponse) {
-                if (authenticationResponse.isSuccessful()) {
-                    User user = authenticationResponse.getUser();
-                    AccountAuthenticator.createAccount(LoginActivity.this,
-                            user.getEmail(), user.getPassword(), user.getToken());
+            public void onChanged(@Nullable String token) {
+                if (token != null) {
+                    AccountAuthenticator.setAuthToken(LoginActivity.this, token);
                     goMainScreen();
                 } else {
-                    String e = authenticationResponse.getErrorMessage();
+                    String e = loginViewModel.getErrorMsj();
                     showErrorMessage(e);
                 }
             }
@@ -112,5 +112,4 @@ public class LoginActivity extends AppCompatActivity {
                 Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
-
 }

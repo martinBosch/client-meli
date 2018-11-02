@@ -9,7 +9,6 @@ import com.martinb.meli.model.ImageManager;
 import com.martinb.meli.network.AppServerRequestFactory;
 import com.martinb.meli.network.AppServerRequests;
 import com.martinb.meli.network.object_request.Product;
-import com.martinb.meli.network.object_response.ProductDetailResponse;
 
 import org.json.JSONObject;
 
@@ -29,10 +28,10 @@ public class ProductDetailsViewModel extends ViewModel {
 
     public LiveData<Product> getProductDetails(String token, String productId) {
         AppServerRequests appserverRequests = AppServerRequestFactory.getInstance();
-        Call<ProductDetailResponse> call = appserverRequests.productDetail("Bearer " + token, productId);
-        call.enqueue(new Callback<ProductDetailResponse>() {
+        Call<Product> call = appserverRequests.productDetail("Bearer " + token, productId);
+        call.enqueue(new Callback<Product>() {
             @Override
-            public void onResponse(Call<ProductDetailResponse> call, Response<ProductDetailResponse> response) {
+            public void onResponse(Call<Product> call, Response<Product> response) {
                 if (response.isSuccessful()) {
                     handleGoodRequest(response);
                 } else {
@@ -41,7 +40,7 @@ public class ProductDetailsViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<ProductDetailResponse> call, Throwable t) {
+            public void onFailure(Call<Product> call, Throwable t) {
                 product.setValue(null);
                 errorMsj = t.getMessage();
             }
@@ -49,11 +48,11 @@ public class ProductDetailsViewModel extends ViewModel {
         return product;
     }
 
-    private void handleGoodRequest(Response<ProductDetailResponse> response) {
-        ProductDetailResponse productDetailsResponse = response.body();
-        this.token = productDetailsResponse.getToken();
-        Product product = productDetailsResponse.getProduct();
+    private void handleGoodRequest(Response<Product> response) {
+        okhttp3.Headers headers = response.headers();
+        this.token = headers.get("Bearer");
 
+        Product product = response.body();
         ArrayList<Bitmap> images = new ArrayList<>();
         for (String encodedImage : product.getEncodedImages()) {
             Bitmap image = ImageManager.getDecodeImage(encodedImage);
@@ -63,7 +62,7 @@ public class ProductDetailsViewModel extends ViewModel {
         this.product.setValue(product);
     }
 
-    private void handleBadRequest(Response<ProductDetailResponse> response) {
+    private void handleBadRequest(Response<Product> response) {
         this.product.setValue(null);
         try {
             JSONObject jObjError = new JSONObject(response.errorBody().string());

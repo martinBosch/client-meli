@@ -3,24 +3,14 @@ package com.martinb.meli.network.object_response;
 public class User {
 
     private String email;
+    private String display_name;
+    private String phone;
     private String password;
-    private String token;
 
-    public User(String email, String password, String token) {
+    public User(String email, String password, String displayName, String phone) {
         this.email = email;
+        this.display_name = displayName;
+        this.phone = phone;
         this.password = password;
-        this.token = token;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
     }
 }

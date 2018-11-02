@@ -60,12 +60,21 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
         return null;
     }
 
-    public static void createAccount(Context context, String email,
-                                     String password, String authToken) {
+    public static void createAccount(Context context, String email, String password) {
         AccountManager accountManager = AccountManager.get(context);
         Account account = new Account(email, ARG_ACCOUNT_TYPE);
 
         accountManager.addAccountExplicitly(account, password, null);
+    }
+
+    public static void setAuthToken(Context context, String authToken) {
+        AccountManager accountManager = AccountManager.get(context);
+        Account[] accounts = accountManager.getAccounts();
+        if (accounts.length == 0) {
+            return;
+        }
+
+        Account account = accounts[0];
         accountManager.setAuthToken(account, ARG_AUTH_TOKEN_TYPE, authToken);
     }
 

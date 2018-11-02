@@ -1,10 +1,13 @@
 package com.martinb.meli.network;
 
+import com.martinb.meli.model.ProductItem;
+import com.martinb.meli.network.object_request.Product;
 import com.martinb.meli.network.object_request.PublishRequest;
-import com.martinb.meli.network.object_response.ProductDetailResponse;
 import com.martinb.meli.network.object_response.ProductPublishedResponse;
 import com.martinb.meli.network.object_response.PublishResponse;
 import com.martinb.meli.network.object_response.User;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -18,18 +21,18 @@ public interface AppServerRequests {
     @GET("/")
     Call<String> helloWord();
 
-    @POST("/signup")
-    Call<User> signup(@Body User user);
+    @POST("/users/signup")
+    Call<Void> signup(@Body User user);
 
-    @POST("/login")
-    Call<User> login(@Body User user);
+    @POST("/users/login")
+    Call<Void> login(@Body User user);
 
     @POST("/products")
-    Call<PublishResponse> publish(@Header("Authorization") String token, @Body PublishRequest product);
+    Call<Void> publish(@Header("Authorization") String token, @Body PublishRequest product);
 
     @GET("/products")
-    Call<ProductPublishedResponse> productsPublished(@Header("Authorization") String token);
+    Call<ArrayList<ProductItem>> productsPublished(@Header("Authorization") String token);
 
-    @GET("/product/{productId}")
-    Call<ProductDetailResponse> productDetail(@Header("Authorization") String token, @Path("productId") String productId);
+    @GET("/products/{productId}")
+    Call<Product> productDetail(@Header("Authorization") String token, @Path("productId") String productId);
 }

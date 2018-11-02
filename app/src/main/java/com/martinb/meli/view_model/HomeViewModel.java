@@ -29,11 +29,11 @@ public class HomeViewModel extends ViewModel {
 
     public LiveData<ArrayList<ProductItem>> getPublishedProduct(String token) {
         AppServerRequests appserverRequests = AppServerRequestFactory.getInstance();
-        Call<ProductPublishedResponse> call = appserverRequests.productsPublished("Bearer " + token);
+        Call<ArrayList<ProductItem>> call = appserverRequests.productsPublished("Bearer " + token);
 
-        call.enqueue(new Callback<ProductPublishedResponse>() {
+        call.enqueue(new Callback<ArrayList<ProductItem>>() {
             @Override
-            public void onResponse(Call<ProductPublishedResponse> call, Response<ProductPublishedResponse> response) {
+            public void onResponse(Call<ArrayList<ProductItem>> call, Response<ArrayList<ProductItem>> response) {
                 if (response.isSuccessful()) {
                     handleGoodRequest(response);
                 } else {
@@ -42,7 +42,7 @@ public class HomeViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<ProductPublishedResponse> call, Throwable t) {
+            public void onFailure(Call<ArrayList<ProductItem>> call, Throwable t) {
                 products.setValue(null);
                 errorMsj = t.getMessage();
             }
@@ -50,11 +50,11 @@ public class HomeViewModel extends ViewModel {
         return products;
     }
 
-    private void handleGoodRequest(Response<ProductPublishedResponse> response) {
-        ProductPublishedResponse productPublished = response.body();
+    private void handleGoodRequest(Response<ArrayList<ProductItem>> response) {
+        okhttp3.Headers headers = response.headers();
+        this.token = headers.get("Bearer");
 
-        this.token = productPublished.getToken();
-        ArrayList<ProductItem> products = productPublished.getProducts();
+        ArrayList<ProductItem> products = response.body();
         for (ProductItem product : products) {
             Bitmap image = ImageManager.getDecodeImage(product.getEncodedThumbnail());
             product.setThumbnail(image);
@@ -62,7 +62,7 @@ public class HomeViewModel extends ViewModel {
         this.products.setValue(products);
     }
 
-    private void handleBadRequest(Response<ProductPublishedResponse> response) {
+    private void handleBadRequest(Response<ArrayList<ProductItem>> response) {
         products.setValue(null);
         try {
             JSONObject jObjError = new JSONObject(response.errorBody().string());

@@ -172,13 +172,12 @@ public class PublishProductActivity extends AppCompatActivity {
 
         publishProductViewModel.publish(token, this.name, this.description, this.encoded_images,
                                         this.price, this.category, this.ubication, this.units)
-                .observe(this, new Observer<Product>() {
+                .observe(this, new Observer<String>() {
             @Override
-            public void onChanged(@Nullable Product product) {
-                if (product != null) {
+            public void onChanged(@Nullable String token) {
+                if (token != null) {
                     showMessage(SUCCESSFUL_PUBLICATION);
-                    String newToken = publishProductViewModel.getToken();
-//                    AccountAuthenticator.updateAuthToken(PublishProductActivity.this, newToken);
+//                    AccountAuthenticator.updateAuthToken(PublishProductActivity.this, token);
                     goMainScreen();
                 } else {
                     String e = publishProductViewModel.getErrorMsj();

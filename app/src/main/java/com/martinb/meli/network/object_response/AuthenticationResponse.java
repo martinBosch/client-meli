@@ -2,16 +2,16 @@ package com.martinb.meli.network.object_response;
 
 public class AuthenticationResponse {
 
-    private User user;
+    private String token;
     private String description;
 
-    public AuthenticationResponse(User user, String description) {
-        this.user = user;
+    public AuthenticationResponse(String token, String description) {
+        this.token = token;
         this.description = description;
     }
 
-    public User getUser() {
-        return user;
+    public String getToken() {
+        return token;
     }
 
     public String getErrorMessage() {
@@ -19,6 +19,6 @@ public class AuthenticationResponse {
     }
 
     public boolean isSuccessful() {
-        return user != null;
+        return token != null;
     }
 }

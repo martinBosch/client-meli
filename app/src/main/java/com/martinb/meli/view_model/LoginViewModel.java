@@ -17,16 +17,19 @@ import retrofit2.Response;
 
 public class LoginViewModel extends ViewModel {
 
-    private MutableLiveData<AuthenticationResponse> data = new MutableLiveData<>();
+    private static final String ERROR_MSJ = "description";
 
-    public LiveData<AuthenticationResponse> login(String email, String password) {
-        User user = new User(email, password, null);
+    private MutableLiveData<String> token = new MutableLiveData<>();
+    private String errorMsj = null;
+
+    public LiveData<String> login(String email, String password) {
+        User user = new User(email, password, null, null);
 
         AppServerRequests appserverRequests = AppServerRequestFactory.getInstance();
-        Call<User> call = appserverRequests.login(user);
-        call.enqueue(new Callback<User>() {
+        Call<Void> call = appserverRequests.login(user);
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     handleGoodRequest(response);
                 } else {
@@ -35,25 +38,30 @@ public class LoginViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                data.setValue(new AuthenticationResponse(null, t.getMessage()));
+            public void onFailure(Call<Void> call, Throwable t) {
+                token.setValue(null);
+                errorMsj = t.getMessage();
             }
         });
-        return data;
+        return token;
     }
 
-    private void handleGoodRequest(Response<User> response) {
-        User user = response.body();
-        data.setValue(new AuthenticationResponse(user, null));
+    private void handleGoodRequest(Response<Void> response) {
+        okhttp3.Headers headers = response.headers();
+        token.setValue( headers.get("Bearer") );
     }
 
-    private void handleBadRequest(Response<User> response) {
+    private void handleBadRequest(Response<Void> response) {
+        token.setValue(null);
         try {
             JSONObject jObjError = new JSONObject(response.errorBody().string());
-            String errorMessage = jObjError.getString("description");
-            data.setValue(new AuthenticationResponse(null, errorMessage));
+            errorMsj = jObjError.getString(ERROR_MSJ);
         } catch (Exception e) {
-            data.setValue(new AuthenticationResponse(null, e.getMessage()));
+            errorMsj = e.getMessage();
         }
+    }
+
+    public String getErrorMsj() {
+        return errorMsj;
     }
 }

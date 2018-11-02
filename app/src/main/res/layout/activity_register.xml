@@ -25,9 +25,9 @@
         android:id="@+id/input_first_name"
         android:layout_width="331dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="78dp"
+        android:layout_marginTop="58dp"
+        android:layout_marginEnd="24dp"
         android:ems="10"
         android:hint="@string/nombre"
         android:inputType="textPersonName"
@@ -64,26 +64,41 @@
         app:layout_constraintTop_toBottomOf="@+id/input_first_name" />
 
     <EditText
+        android:id="@+id/input_phone"
+        android:layout_width="326dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="24dp"
+        android:ems="10"
+        android:hint="@string/phone"
+        android:inputType="phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_email" />
+
+    <EditText
         android:id="@+id/input_password"
         android:layout_width="327dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="26dp"
+        android:layout_marginEnd="24dp"
         android:ems="10"
         android:hint="@string/contraseña"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_email" />
+        app:layout_constraintTop_toBottomOf="@+id/input_phone" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="138dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="120dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
         android:background="#FFFFDD00 "
         android:onClick="register"
         android:text="@string/registrarme"
@@ -91,4 +106,5 @@
         app:layout_constraintHorizontal_bias="0.025"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_password" />
+
 </android.support.constraint.ConstraintLayout>

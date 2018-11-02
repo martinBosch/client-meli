@@ -53,4 +53,5 @@
     <string name="my_data">Mis datos</string>
     <string name="profile">Perfil</string>
     <string name="welcome">¡Bienvenido!</string>
+    <string name="phone">Telefono</string>
 </resources>
