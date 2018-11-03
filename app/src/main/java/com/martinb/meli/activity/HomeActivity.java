@@ -53,7 +53,8 @@ public class HomeActivity extends AppCompatActivity {
                 int itemId = menuItem.getItemId();
                 switch (itemId) {
                     case R.id.user:
-                        Toast.makeText(HomeActivity.this, "User", Toast.LENGTH_SHORT).show();
+                        goProfileScreen();
+//                        Toast.makeText(HomeActivity.this, "User", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.account:
                         goMyAccountScreen();
@@ -72,6 +73,11 @@ public class HomeActivity extends AppCompatActivity {
 
     private void goPublischScreen() {
         Intent intent = new Intent(this, PublishProductActivity.class);
+        startActivity(intent);
+    }
+
+    private void goProfileScreen() {
+        Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
     }
 

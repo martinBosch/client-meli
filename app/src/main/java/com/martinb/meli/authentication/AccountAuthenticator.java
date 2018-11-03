@@ -11,6 +11,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
 
     private static final String ARG_ACCOUNT_TYPE = "com.martinb.meli";
     private static final String ARG_AUTH_TOKEN_TYPE = "full_access";
+    private static final String USERID = "userId";
 
     private final Context mContext;
 
@@ -65,6 +66,28 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
         Account account = new Account(email, ARG_ACCOUNT_TYPE);
 
         accountManager.addAccountExplicitly(account, password, null);
+    }
+
+    public static void setUserId(Context context, String id) {
+        AccountManager accountManager = AccountManager.get(context);
+        Account[] accounts = accountManager.getAccounts();
+        if (accounts.length == 0) {
+            return;
+        }
+
+        Account account = accounts[0];
+        accountManager.setUserData(account, USERID, id);
+    }
+
+    public static String getUserId(Context context) {
+        AccountManager accountManager = AccountManager.get(context);
+        Account[] accounts = accountManager.getAccounts();
+        if (accounts.length == 0) {
+            return null;
+        }
+
+        Account account = accounts[0];
+        return accountManager.getUserData(account, USERID);
     }
 
     public static void setAuthToken(Context context, String authToken) {

@@ -1,5 +1,6 @@
 package com.martinb.meli.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -62,8 +63,14 @@ public class MyAccountActivity extends AppCompatActivity {
         my_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MyAccountActivity.this, "Mis datos", Toast.LENGTH_SHORT).show();
+                goProfileScreen();
+//                Toast.makeText(MyAccountActivity.this, "Mis datos", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void goProfileScreen() {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
     }
 }

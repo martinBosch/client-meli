@@ -52,6 +52,8 @@ public class RegisterActivity extends AppCompatActivity {
             public void onChanged(@Nullable String token) {
                 if (token != null) {
                     AccountAuthenticator.setAuthToken(RegisterActivity.this, token);
+                    String userId = registerViewModel.getUserId();
+                    AccountAuthenticator.setUserId(RegisterActivity.this, userId);
                     goMainScreen();
                 } else {
                     String e = registerViewModel.getErrorMsj();

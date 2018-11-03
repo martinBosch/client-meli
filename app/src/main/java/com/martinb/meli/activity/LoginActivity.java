@@ -91,6 +91,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onChanged(@Nullable String token) {
                 if (token != null) {
                     AccountAuthenticator.setAuthToken(LoginActivity.this, token);
+                    String userId = loginViewModel.getUserId();
+                    AccountAuthenticator.setUserId(LoginActivity.this, userId);
                     goMainScreen();
                 } else {
                     String e = loginViewModel.getErrorMsj();

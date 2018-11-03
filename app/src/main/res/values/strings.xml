@@ -54,4 +54,5 @@
     <string name="profile">Perfil</string>
     <string name="welcome">¡Bienvenido!</string>
     <string name="phone">Telefono</string>
+    <string name="display_name">Nombre y apellido</string>
 </resources>

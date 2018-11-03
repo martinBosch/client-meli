@@ -4,6 +4,7 @@ import com.martinb.meli.model.ProductItem;
 import com.martinb.meli.network.object_request.Product;
 import com.martinb.meli.network.object_request.PublishRequest;
 import com.martinb.meli.network.object_request.User;
+import com.martinb.meli.network.object_response.UserId;
 
 import java.util.ArrayList;
 
@@ -20,10 +21,10 @@ public interface AppServerRequests {
     Call<String> helloWord();
 
     @POST("/users/signup")
-    Call<Void> signup(@Body User user);
+    Call<UserId> signup(@Body User user);
 
     @POST("/users/login")
-    Call<Void> login(@Body User user);
+    Call<UserId> login(@Body User user);
 
     @POST("/products")
     Call<Void> publish(@Header("Authorization") String token, @Body PublishRequest product);
@@ -33,4 +34,7 @@ public interface AppServerRequests {
 
     @GET("/products/{productId}")
     Call<Product> productDetail(@Header("Authorization") String token, @Path("productId") String productId);
+
+    @GET("/users/{userId}")
+    Call<User> profile(@Header("Authorization") String token, @Path("userId") String userId);
 }

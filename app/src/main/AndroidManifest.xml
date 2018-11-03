@@ -70,7 +70,8 @@
             android:label="@string/title_activity_product_details"
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.PublishProductActivity" />
-        <activity android:name=".activity.MyAccountActivity"></activity>
+        <activity android:name=".activity.MyAccountActivity" />
+        <activity android:name=".activity.ProfileActivity"></activity>
     </application>
 
 </manifest>

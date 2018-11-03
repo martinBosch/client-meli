@@ -63,7 +63,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 if (product != null) {
                     String token = productDetailsViewModel.getToken();
 //                    AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
-                    findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                     _setupProductDetails(product);
                 } else {
                     String e = productDetailsViewModel.getErrorMsj();
@@ -74,8 +73,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
     private void _setupProductDetails(Product product) {
-        findViewById(R.id.product_details).setVisibility(View.VISIBLE);
-
         TextView titulo = findViewById(R.id.title);
         titulo.setText(product.getName());
 
@@ -97,6 +94,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         TextView ubication_seller = findViewById(R.id.ubication_seller);
         ubication_seller.setText(product.getUbication());
+
+        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+        findViewById(R.id.product_details).setVisibility(View.VISIBLE);
     }
 
     private void setupGallery(ArrayList<Bitmap> images) {

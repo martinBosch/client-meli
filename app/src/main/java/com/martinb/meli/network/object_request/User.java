@@ -13,4 +13,16 @@ public class User {
         this.phone = phone;
         this.password = password;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getDisplayName() {
+        return display_name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
 }
