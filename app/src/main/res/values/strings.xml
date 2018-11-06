@@ -55,4 +55,10 @@
     <string name="welcome">¡Bienvenido!</string>
     <string name="phone">Telefono</string>
     <string name="display_name">Nombre y apellido</string>
+    <string name="shipping_method_title">¿Cómo querés recibir el producto?</string>
+    <string name="shipping_method_home">Enviar a mi domicilio</string>
+    <string name="shipping_method_local">Retiro en local</string>
+    <string name="delivery_home_title">Ingresa la dirección de envío</string>
+    <string name="continue_title">Continuar</string>
+    <string name="payment_methods_purchase">¿Cómo querés pagar?</string>
 </resources>

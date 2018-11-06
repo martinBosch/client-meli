@@ -117,7 +117,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
     public void comprar(View view) {
-        Toast.makeText(this, "Comprar", Toast.LENGTH_SHORT).show();
+        //Todo: deberia pasar un objeto que comtenga toda la info de una compra y se vaya completando
+        // a medida que avanzan las pantallas.
+        Intent intent = new Intent(this, PurchaseShippingMethodsActivity.class);
+        startActivity(intent);
+
+//        Toast.makeText(this, "Comprar", Toast.LENGTH_SHORT).show();
     }
 
     private void showMessage(String msj) {

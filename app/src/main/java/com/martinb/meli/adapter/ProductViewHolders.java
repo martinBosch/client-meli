@@ -34,11 +34,7 @@ public class ProductViewHolders extends RecyclerView.ViewHolder implements View.
 
     @Override
     public void onClick(View view) {
-        Toast.makeText(view.getContext(), "Clicked Position = " + getLayoutPosition(), Toast.LENGTH_SHORT).show();
-
-        //Todo: pasarle el id del producto para hacer la request y que me manden todos los detalles.
         Intent intent = new Intent(view.getContext(), ProductDetailsActivity.class);
-        //Aca en vez de title deberia pasarle el id del producto.
         intent.putExtra(ID_PRODUCTO, this._id);
         view.getContext().startActivity(intent);
     }

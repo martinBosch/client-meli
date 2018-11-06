@@ -71,7 +71,10 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.PublishProductActivity" />
         <activity android:name=".activity.MyAccountActivity" />
-        <activity android:name=".activity.ProfileActivity"></activity>
+        <activity android:name=".activity.ProfileActivity" />
+        <activity android:name=".activity.PurchaseShippingMethodsActivity" />
+        <activity android:name=".activity.PurchaseDeliveryHomeActivity" />
+        <activity android:name=".activity.PurchasePaymentMethodsActivity"></activity>
     </application>
 
 </manifest>
