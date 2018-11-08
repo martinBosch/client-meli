@@ -61,4 +61,18 @@
     <string name="delivery_home_title">Ingresa la dirección de envío</string>
     <string name="continue_title">Continuar</string>
     <string name="payment_methods_purchase">¿Cómo querés pagar?</string>
+    <string name="card_payment_title">Ingresa los datos de tu tarjeta</string>
+    <string name="card_numbre">Número de la tarjeta</string>
+    <string name="expiration_month">Mes de vencimiento</string>
+    <string name="expiration_year">Año de vencimiento</string>
+    <string name="card_holder_title">Nombre y apellido del titular</string>
+    <string name="expiration_date">Fecha de vencimiento</string>
+    <string name="expiration_date_format">MM/AA</string>
+    <string name="card_cvc">Código de seguridad</string>
+    <string name="purchase_resume">Resumen de su compra</string>
+    <string name="amount">Cantidad</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="shipping">Envío</string>
+    <string name="total">Total</string>
+    <string name="buy">Comprar</string>
 </resources>

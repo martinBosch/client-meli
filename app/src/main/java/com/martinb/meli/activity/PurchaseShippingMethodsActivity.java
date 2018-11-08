@@ -5,16 +5,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
 import com.martinb.meli.R;
+import com.martinb.meli.model.Purchase;
+import com.martinb.meli.network.object_request.Product;
+
+import static com.martinb.meli.activity.ProductDetailsActivity.PURCHASE;
 
 public class PurchaseShippingMethodsActivity extends AppCompatActivity {
+
+    private Purchase purchase;
+
+    private static final String LOCAL = "local";
+    private static final String DELIVERY = "delivery";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shipping_method_purchase);
+        setContentView(R.layout.activity_purchase_shipping_method);
+
+        Intent intent = getIntent();
+        purchase = (Purchase) intent.getSerializableExtra(PURCHASE);
 
         setupToolbar();
     }
@@ -32,18 +43,19 @@ public class PurchaseShippingMethodsActivity extends AppCompatActivity {
         return true;
     }
 
-    //Todo: Aca deberia llamar a un end point que me diga cuanto sale el costo de envio.
     public void shipping_local(View view) {
+        purchase.setShipping_method(LOCAL);
+        purchase.setDelivery_cost(0.0f);
         Intent intent = new Intent(this, PurchasePaymentMethodsActivity.class);
+        intent.putExtra(PURCHASE, purchase);
         startActivity(intent);
-
-//        Toast.makeText(this, "Retiro en local", Toast.LENGTH_SHORT).show();
     }
 
+    //Todo: Aca deberia llamar a un end point que me diga cuanto sale el costo de envio.
     public void shipping_home(View view) {
+        purchase.setShipping_method(DELIVERY);
         Intent intent = new Intent(this, PurchaseDeliveryHomeActivity.class);
+        intent.putExtra(PURCHASE, purchase);
         startActivity(intent);
-
-//        Toast.makeText(this, "Envio a domicilio", Toast.LENGTH_SHORT).show();
     }
 }

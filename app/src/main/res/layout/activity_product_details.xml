@@ -149,7 +149,7 @@
             android:background="@color/colorPrimary"
             android:gravity="center"
             android:onClick="comprar"
-            android:text="Comprar"
+            android:text="@string/buy"
             android:textAlignment="center"
             android:textColor="@android:color/white" />
 

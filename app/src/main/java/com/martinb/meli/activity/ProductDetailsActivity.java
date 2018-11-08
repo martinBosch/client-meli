@@ -19,6 +19,7 @@ import com.martinb.meli.R;
 import com.martinb.meli.adapter.GalleryAdapter;
 import com.martinb.meli.adapter.ProductViewHolders;
 import com.martinb.meli.authentication.AccountAuthenticator;
+import com.martinb.meli.model.Purchase;
 import com.martinb.meli.network.object_request.Product;
 import com.martinb.meli.view_model.ProductDetailsViewModel;
 
@@ -28,6 +29,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private ProductDetailsViewModel productDetailsViewModel;
 
+    private String productId;
+    private Product product;
+
+    public static final String PURCHASE = "purchase";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +42,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         this.productDetailsViewModel = ViewModelProviders.of(this).get(ProductDetailsViewModel.class);
 
         Intent intent = getIntent();
-        String productId = intent.getStringExtra(ProductViewHolders.ID_PRODUCTO);
+        productId = intent.getStringExtra(ProductViewHolders.ID_PRODUCTO);
 
         setupToolbar();
         setupProductDetails(productId);
@@ -73,6 +79,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
     private void _setupProductDetails(Product product) {
+        this.product = product;
+
         TextView titulo = findViewById(R.id.title);
         titulo.setText(product.getName());
 
@@ -119,10 +127,16 @@ public class ProductDetailsActivity extends AppCompatActivity {
     public void comprar(View view) {
         //Todo: deberia pasar un objeto que comtenga toda la info de una compra y se vaya completando
         // a medida que avanzan las pantallas.
-        Intent intent = new Intent(this, PurchaseShippingMethodsActivity.class);
-        startActivity(intent);
+        Purchase purchase = new Purchase();
+        purchase.setProductId(productId);
+        purchase.setPrice(product.getPrice());
+        Spinner amount = findViewById(R.id.cantidad);
+        Integer amount_purchased = Integer.parseInt( amount.getSelectedItem().toString() );
+        purchase.setAmount(amount_purchased);
 
-//        Toast.makeText(this, "Comprar", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, PurchaseShippingMethodsActivity.class);
+        intent.putExtra(PURCHASE, purchase);
+        startActivity(intent);
     }
 
     private void showMessage(String msj) {

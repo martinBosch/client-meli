@@ -12,6 +12,9 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.martinb.meli.R;
+import com.martinb.meli.model.Purchase;
+
+import static com.martinb.meli.activity.ProductDetailsActivity.PURCHASE;
 
 public class PurchaseDeliveryHomeActivity extends AppCompatActivity {
 
@@ -23,7 +26,17 @@ public class PurchaseDeliveryHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_purchase_delivery_home);
 
         setupToolbar();
+        setupDeliveryDestination();
+    }
 
+    private void setupToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar7);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    private void setupDeliveryDestination() {
         PlaceAutocompleteFragment placeAutocomplete = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.delivery_direccion);
 
@@ -40,13 +53,6 @@ public class PurchaseDeliveryHomeActivity extends AppCompatActivity {
         });
     }
 
-    private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar7);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-    }
-
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
@@ -54,8 +60,18 @@ public class PurchaseDeliveryHomeActivity extends AppCompatActivity {
     }
 
     public void continueToPayment(View view) {
-        Intent intent = new Intent(this, PurchasePaymentMethodsActivity.class);
-        startActivity(intent);
+        Intent intent = getIntent();
+        Purchase purchase = (Purchase) intent.getSerializableExtra(PURCHASE);
+        purchase.setDestination_address(ubication);
+//        purchase.setDestination_latitude();
+//        purchase.setDestination_longitude();
+        //Todo: aca deberia llamar al endpoint del server que calcula el costo del viaje
+        Float cost = 0.0f;
+        purchase.setDelivery_cost(cost);
+
+        Intent i = new Intent(this, PurchasePaymentMethodsActivity.class);
+        i.putExtra(PURCHASE, purchase);
+        startActivity(i);
     }
 
     private void showMessage(String msj) {

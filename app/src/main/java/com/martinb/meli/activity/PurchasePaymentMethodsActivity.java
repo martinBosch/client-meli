@@ -1,5 +1,6 @@
 package com.martinb.meli.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,8 +9,14 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.martinb.meli.R;
+import com.martinb.meli.model.Purchase;
+
+import static com.martinb.meli.activity.ProductDetailsActivity.PURCHASE;
 
 public class PurchasePaymentMethodsActivity extends AppCompatActivity {
+
+    private static final String CREDIT = "credit";
+    private static final String DEBIT = "debit";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +45,8 @@ public class PurchasePaymentMethodsActivity extends AppCompatActivity {
         credit_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(PurchasePaymentMethodsActivity.this, "Credit card", Toast.LENGTH_SHORT).show();
+                goPaymentCardScreen(CREDIT);
+//                Toast.makeText(PurchasePaymentMethodsActivity.this, "Credit card", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -46,8 +54,19 @@ public class PurchasePaymentMethodsActivity extends AppCompatActivity {
         debit_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(PurchasePaymentMethodsActivity.this, "Debit card", Toast.LENGTH_SHORT).show();
+                goPaymentCardScreen(DEBIT);
+//                Toast.makeText(PurchasePaymentMethodsActivity.this, "Debit card", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void goPaymentCardScreen(String paymentMethod) {
+        Intent intent = getIntent();
+        Purchase purchase = (Purchase) intent.getSerializableExtra(PURCHASE);
+        purchase.setPayment_method(paymentMethod);
+
+        Intent i = new Intent(this, PurchasePaymentCardActivity.class);
+        i.putExtra(PURCHASE, purchase);
+        startActivity(i);
     }
 }
