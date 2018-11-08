@@ -9,6 +9,7 @@ import com.martinb.meli.model.ImageManager;
 import com.martinb.meli.network.AppServerRequestFactory;
 import com.martinb.meli.network.AppServerRequests;
 import com.martinb.meli.network.object_request.Product;
+import com.martinb.meli.network.object_request.Question;
 
 import org.json.JSONObject;
 
@@ -23,8 +24,54 @@ public class ProductDetailsViewModel extends ViewModel {
     private static final String ERROR_MSJ = "description";
 
     private MutableLiveData<Product> product = new MutableLiveData<>();
+    public MutableLiveData<ArrayList<String>> questions = new MutableLiveData<>();
+
     private String errorMsj = null;
     private String token;
+
+    public LiveData<ArrayList<String>> questions(String token, String productId) {
+        AppServerRequests appserverRequests = AppServerRequestFactory.getInstance();
+        Call<ArrayList<Question>> call = appserverRequests.questions("Bearer " + token, productId);
+        call.enqueue(new Callback<ArrayList<Question>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Question>> call, Response<ArrayList<Question>> response) {
+                if (response.isSuccessful()) {
+                    handleGoodRequest2(response);
+                } else {
+                    handleBadRequest2(response);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Question>> call, Throwable t) {
+                product.setValue(null);
+                errorMsj = t.getMessage();
+            }
+        });
+        return questions;
+    }
+
+    private void handleGoodRequest2(Response<ArrayList<Question>> response) {
+        okhttp3.Headers headers = response.headers();
+        this.token = headers.get("Bearer");
+
+        ArrayList<Question> questions = response.body();
+        ArrayList<String> questions_str = new ArrayList<>();
+        for (Question question : questions) {
+            questions_str.add( question.getQuestion() );
+        }
+        this.questions.setValue(questions_str);
+    }
+
+    private void handleBadRequest2(Response<ArrayList<Question>> response) {
+        this.questions.setValue(null);
+        try {
+            JSONObject jObjError = new JSONObject(response.errorBody().string());
+            errorMsj = jObjError.getString(ERROR_MSJ);
+        } catch (Exception e) {
+            errorMsj = e.getMessage();
+        }
+    }
 
     public LiveData<Product> getProductDetails(String token, String productId) {
         AppServerRequests appserverRequests = AppServerRequestFactory.getInstance();
@@ -79,4 +126,5 @@ public class ProductDetailsViewModel extends ViewModel {
     public String getToken() {
         return token;
     }
+
 }

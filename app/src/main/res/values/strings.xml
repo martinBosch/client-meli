@@ -75,4 +75,7 @@
     <string name="shipping">Envío</string>
     <string name="total">Total</string>
     <string name="buy">Comprar</string>
+    <string name="ask">Preguntar</string>
+    <string name="ask_question">Escribe tu pregunta</string>
+    <string name="questions">Preguntas</string>
 </resources>

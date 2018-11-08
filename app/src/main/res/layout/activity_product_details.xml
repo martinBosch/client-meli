@@ -194,12 +194,36 @@
             android:background="@android:color/darker_gray"/>
 
         <TextView
-            android:id="@+id/opinions_title"
+            android:id="@+id/questions_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
-            android:text="@string/opinions"
+            android:text="@string/questions"
             android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/questions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/ask_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:onClick="ask"
+            android:text="@string/ask"
+            android:textAlignment="center"
+            android:textColor="@android:color/holo_blue_light"
+            android:background="?android:attr/selectableItemBackground" />
 
     </LinearLayout>
 
