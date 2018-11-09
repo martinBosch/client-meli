@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="#ffe666"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffe666"
-    tools:context=".activity.PurchasePaymentCardActivity">
+    tools:context=".activity.purchase.PurchasePaymentCardActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar9"
@@ -23,6 +24,7 @@
         android:layout_width="264dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_gravity="center"
         android:text="@string/card_payment_title"
         android:textAlignment="center"
         android:textSize="26sp"
@@ -40,6 +42,16 @@
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <EditText
+        android:id="@+id/number_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/number_card_title" />
 
     <TextView
         android:id="@+id/card_holder_title"
@@ -61,16 +73,6 @@
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card_holder_title" />
-
-    <EditText
-        android:id="@+id/number_card"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/number_card_title" />
 
     <TextView
         android:id="@+id/expiration_date_title"
@@ -120,6 +122,7 @@
         android:layout_width="319dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:layout_gravity="center"
         android:background="#00aced"
         android:onClick="continueToPurchaseResume"
         android:text="@string/continue_title"
@@ -131,4 +134,4 @@
         app:layout_constraintTop_toBottomOf="@+id/card_cvc" />
 
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

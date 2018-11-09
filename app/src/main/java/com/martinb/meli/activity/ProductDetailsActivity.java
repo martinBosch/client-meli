@@ -11,11 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.martinb.meli.R;
+import com.martinb.meli.activity.purchase.PurchaseShippingMethodsActivity;
 import com.martinb.meli.adapter.GalleryAdapter;
 import com.martinb.meli.adapter.ProductViewHolders;
 import com.martinb.meli.authentication.AccountAuthenticator;
@@ -45,6 +47,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productId = intent.getStringExtra(ProductViewHolders.ID_PRODUCTO);
 
         setupToolbar();
+        setupQuestions(productId);
         setupProductDetails(productId);
     }
 
@@ -124,6 +127,33 @@ public class ProductDetailsActivity extends AppCompatActivity {
         cantidad.setAdapter(adapter);
     }
 
+    private void setupQuestions(String productId) {
+        String token = AccountAuthenticator.getAuthToken(ProductDetailsActivity.this);
+        productDetailsViewModel.questions(token, productId).observe(this, new Observer<ArrayList<String>>() {
+            @Override
+            public void onChanged(@Nullable ArrayList<String> questions) {
+                if (questions != null) {
+                    String token = productDetailsViewModel.getToken();
+//                    AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
+                    _setupQuestions(questions);
+                } else {
+                    String e = productDetailsViewModel.getErrorMsj();
+                    showMessage(e);
+                }
+            }
+        });
+    }
+
+    private void _setupQuestions(ArrayList<String> questions) {
+        LinearLayout questions_layout = findViewById(R.id.questions);
+        for(String question : questions) {
+            TextView question_text = new TextView(this);
+            question_text.setPadding(0,10,0,0);
+            question_text.setText(question);
+            questions_layout.addView( question_text );
+        }
+    }
+
     public void comprar(View view) {
         //Todo: deberia pasar un objeto que comtenga toda la info de una compra y se vaya completando
         // a medida que avanzan las pantallas.
@@ -136,6 +166,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, PurchaseShippingMethodsActivity.class);
         intent.putExtra(PURCHASE, purchase);
+        startActivity(intent);
+    }
+
+    public void ask(View view) {
+        Intent intent = new Intent(this, QuestionActivity.class);
+        intent.putExtra(ProductViewHolders.ID_PRODUCTO, productId);
         startActivity(intent);
     }
 

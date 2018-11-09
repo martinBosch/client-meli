@@ -3,6 +3,7 @@ package com.martinb.meli.network;
 import com.martinb.meli.model.ProductItem;
 import com.martinb.meli.network.object_request.Product;
 import com.martinb.meli.network.object_request.PublishRequest;
+import com.martinb.meli.network.object_request.Question;
 import com.martinb.meli.network.object_request.User;
 import com.martinb.meli.network.object_response.UserId;
 
@@ -37,4 +38,10 @@ public interface AppServerRequests {
 
     @GET("/users/{userId}")
     Call<User> profile(@Header("Authorization") String token, @Path("userId") String userId);
+
+    @POST("/products/{productId}/questions")
+    Call<Void> publishQuestion(@Header("Authorization") String token, @Path("productId") String productId,  @Body Question question);
+
+    @GET("/products/{productId}/questions")
+    Call<ArrayList<Question>> questions(@Header("Authorization") String token, @Path("productId") String productId);
 }

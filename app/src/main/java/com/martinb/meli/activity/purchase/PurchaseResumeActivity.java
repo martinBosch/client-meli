@@ -1,18 +1,15 @@
-package com.martinb.meli.activity;
+package com.martinb.meli.activity.purchase;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.martinb.meli.R;
 import com.martinb.meli.model.Purchase;
-
-import org.w3c.dom.Text;
 
 import static com.martinb.meli.activity.ProductDetailsActivity.PURCHASE;
 

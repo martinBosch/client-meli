@@ -1,4 +1,4 @@
-package com.martinb.meli.activity;
+package com.martinb.meli.activity.purchase;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +8,6 @@ import android.view.View;
 
 import com.martinb.meli.R;
 import com.martinb.meli.model.Purchase;
-import com.martinb.meli.network.object_request.Product;
 
 import static com.martinb.meli.activity.ProductDetailsActivity.PURCHASE;
 

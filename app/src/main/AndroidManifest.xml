@@ -72,11 +72,12 @@
         <activity android:name=".activity.PublishProductActivity" />
         <activity android:name=".activity.MyAccountActivity" />
         <activity android:name=".activity.ProfileActivity" />
-        <activity android:name=".activity.PurchaseShippingMethodsActivity" />
-        <activity android:name=".activity.PurchaseDeliveryHomeActivity" />
-        <activity android:name=".activity.PurchasePaymentMethodsActivity" />
-        <activity android:name=".activity.PurchasePaymentCardActivity" />
-        <activity android:name=".activity.PurchaseResumeActivity"></activity>
+        <activity android:name=".activity.purchase.PurchaseShippingMethodsActivity" />
+        <activity android:name=".activity.purchase.PurchaseDeliveryHomeActivity" />
+        <activity android:name=".activity.purchase.PurchasePaymentMethodsActivity" />
+        <activity android:name=".activity.purchase.PurchasePaymentCardActivity" />
+        <activity android:name=".activity.purchase.PurchaseResumeActivity" />
+        <activity android:name=".activity.QuestionActivity"></activity>
     </application>
 
 </manifest>
