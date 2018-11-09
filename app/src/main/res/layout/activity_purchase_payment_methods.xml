@@ -5,7 +5,7 @@
     android:background="#ffe666"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.PurchasePaymentMethodsActivity">
+    tools:context=".activity.purchase.PurchasePaymentMethodsActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar8"

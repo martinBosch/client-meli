@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.martinb.meli.R;
+import com.martinb.meli.activity.purchase.PurchaseShippingMethodsActivity;
 import com.martinb.meli.adapter.GalleryAdapter;
 import com.martinb.meli.adapter.ProductViewHolders;
 import com.martinb.meli.authentication.AccountAuthenticator;
@@ -147,6 +148,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         LinearLayout questions_layout = findViewById(R.id.questions);
         for(String question : questions) {
             TextView question_text = new TextView(this);
+            question_text.setPadding(0,10,0,0);
             question_text.setText(question);
             questions_layout.addView( question_text );
         }

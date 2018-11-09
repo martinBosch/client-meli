@@ -1,4 +1,4 @@
-package com.martinb.meli.activity;
+package com.martinb.meli.activity.purchase;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
