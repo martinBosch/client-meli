@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -53,8 +52,7 @@ public class QuestionActivity extends AppCompatActivity {
         int itemId = item.getItemId();
         switch(itemId) {
             case R.id.send:
-                send();
-//                Toast.makeText(QuestionActivity.this, "Send", Toast.LENGTH_SHORT).show();
+                publish();
                 return true;
             case android.R.id.home:
                 onBackPressed();
@@ -64,7 +62,7 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
-    private void send() {
+    private void publish() {
         String token = AccountAuthenticator.getAuthToken(QuestionActivity.this);
 
         Intent intent = getIntent();
@@ -76,14 +74,14 @@ public class QuestionActivity extends AppCompatActivity {
         this.questionViewModel.publishQuestion(token, productId, question).observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String token) {
-                if (token != null) {
-//                    AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
-                    showMessage(QUESTION_PUBLISHED);
-                    goProductDetailsScreen();
-                } else {
+                if (token == null) {
                     String e = questionViewModel.getErrorMsj();
                     showMessage(e);
+                    return;
                 }
+//                AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
+                showMessage(QUESTION_PUBLISHED);
+                goProductDetailsScreen();
             }
         });
     }

@@ -64,7 +64,6 @@ public class MyAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 goProfileScreen();
-//                Toast.makeText(MyAccountActivity.this, "Mis datos", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffe666"
+    android:background="@color/purchase_background"
     tools:context=".activity.purchase.PurchaseDeliveryHomeActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffe666"
+        android:background="@color/purchase_background"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +53,7 @@
         android:layout_width="295dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="#00aced"
+        android:background="@color/button_light_blue"
         android:onClick="continueToPayment"
         android:text="@string/continue_title"
         android:textAllCaps="false"

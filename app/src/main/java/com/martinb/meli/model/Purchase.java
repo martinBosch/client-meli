@@ -1,12 +1,14 @@
 package com.martinb.meli.model;
 
+import com.martinb.meli.network.object_request.Payment;
+
 import java.io.Serializable;
 
 public class Purchase implements Serializable {
 
     private String productId;
     private Float price;
-    private Integer amount;
+    private Integer units;
 
     private String shipping_method;
     private String destination_address;
@@ -20,6 +22,9 @@ public class Purchase implements Serializable {
     private String expiration_date;
     private Integer card_cvc;
 
+    private static final int MONTH = 0;
+    private static final int YEAR = 1;
+
     public String getProductId() {
         return productId;
     }
@@ -28,8 +33,8 @@ public class Purchase implements Serializable {
         return price;
     }
 
-    public Integer getAmount() {
-        return amount;
+    public Integer getUnits() {
+        return units;
     }
 
     public String getShipping_method() {
@@ -80,8 +85,8 @@ public class Purchase implements Serializable {
         this.price = price;
     }
 
-    public void setAmount(Integer amount) {
-        this.amount = amount;
+    public void setUnits(Integer units) {
+        this.units = units;
     }
 
     public void setShipping_method(String shipping_method) {
@@ -122,5 +127,14 @@ public class Purchase implements Serializable {
 
     public void setCard_cvc(Integer card_cvc) {
         this.card_cvc = card_cvc;
+    }
+
+    public Payment getPayment() {
+        String[] expiration_date_split = this.expiration_date.split("/");
+        String expiration_month = expiration_date_split[MONTH];
+        String expiration_year = expiration_date_split[YEAR];
+
+        return new Payment(this.payment_method, this.card_number, this.card_holder,
+                expiration_year, expiration_month, this.card_cvc);
     }
 }

@@ -14,7 +14,9 @@ public class Product {
     private String category;
     private String ubication;
     private int units;
+
     private String owner_id;
+    private String display_name;
 
     private ArrayList<Bitmap> desencodedImages;
 
@@ -63,5 +65,9 @@ public class Product {
 
     public int getUnits() {
         return units;
+    }
+
+    public String getDisplay_name() {
+        return display_name;
     }
 }

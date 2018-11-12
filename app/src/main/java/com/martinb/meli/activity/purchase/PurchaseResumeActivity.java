@@ -1,6 +1,9 @@
 package com.martinb.meli.activity.purchase;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -9,18 +12,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.martinb.meli.R;
+import com.martinb.meli.authentication.AccountAuthenticator;
 import com.martinb.meli.model.Purchase;
+import com.martinb.meli.view_model.PurchaseViewModel;
 
 import static com.martinb.meli.activity.ProductDetailsActivity.PURCHASE;
 
 public class PurchaseResumeActivity extends AppCompatActivity {
 
+    private PurchaseViewModel purchaseViewModel;
     private Purchase purchase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_purchase_resume);
+
+        this.purchaseViewModel = ViewModelProviders.of(this).get(PurchaseViewModel.class);
 
         Intent intent = getIntent();
         purchase = (Purchase) intent.getSerializableExtra(PURCHASE);
@@ -48,7 +56,7 @@ public class PurchaseResumeActivity extends AppCompatActivity {
         product.setText( String.format("%s", price) );
 
         TextView amount_text = findViewById(R.id.amount);
-        Integer amount = purchase.getAmount();
+        Integer amount = purchase.getUnits();
         amount_text.setText( String.format("%s", amount) );
 
         TextView subtotal_text = findViewById(R.id.subtotal);
@@ -65,6 +73,43 @@ public class PurchaseResumeActivity extends AppCompatActivity {
     }
 
     public void confirm_purchase(View view) {
-        Toast.makeText(PurchaseResumeActivity.this, "Compraste", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(PurchaseResumeActivity.this, "Compraste", Toast.LENGTH_SHORT).show();
+        String token = AccountAuthenticator.getAuthToken(PurchaseResumeActivity.this);
+        purchaseViewModel.registerPurchase(token, purchase.getProductId(), purchase.getUnits()).observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String purchaseId) {
+                if (purchaseId == null) {
+                    String e = purchaseViewModel.getRegisterPurchaseErrorMsj();
+                    showMessage(e);
+                    return;
+                }
+
+                String token = purchaseViewModel.getRegisterPurchaseToken();
+//                AccountAuthenticator.updateAuthToken(PurchaseResumeActivity.this, token);
+                register_payment(token, purchaseId);
+            }
+        });
+    }
+
+    public void register_payment(String token, String purchaseId) {
+        purchaseViewModel.registerPayment(token, purchaseId, purchase.getPayment()).observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String paymentId) {
+                if (paymentId == null) {
+                    String e = purchaseViewModel.getRegisterPaymentErrorMsj();
+                    showMessage(e);
+                    return;
+                }
+
+                String token = purchaseViewModel.getRegisterPaymentToken();
+//                AccountAuthenticator.updateAuthToken(PurchaseResumeActivity.this, token);
+                //Todo: hacer algo con el paymentId o sino devolver Void.
+            }
+        });
+
+    }
+
+    private void showMessage(String msj) {
+        Toast.makeText(this, msj, Toast.LENGTH_SHORT).show();
     }
 }

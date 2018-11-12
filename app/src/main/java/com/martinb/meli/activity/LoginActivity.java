@@ -18,6 +18,7 @@ import com.facebook.login.widget.LoginButton;
 import com.martinb.meli.R;
 import com.martinb.meli.authentication.AccountAuthenticator;
 import com.martinb.meli.model.FacebookManager;
+import com.martinb.meli.network.object_response.UserId;
 import com.martinb.meli.view_model.LoginViewModel;
 
 import java.util.Arrays;
@@ -86,18 +87,18 @@ public class LoginActivity extends AppCompatActivity {
 
         AccountAuthenticator.createAccount(this, email, password);
 
-        loginViewModel.login(email, password).observe(this, new Observer<String>() {
+        loginViewModel.login(email, password).observe(this, new Observer<UserId>() {
             @Override
-            public void onChanged(@Nullable String token) {
-                if (token != null) {
-                    AccountAuthenticator.setAuthToken(LoginActivity.this, token);
-                    String userId = loginViewModel.getUserId();
-                    AccountAuthenticator.setUserId(LoginActivity.this, userId);
-                    goMainScreen();
-                } else {
+            public void onChanged(@Nullable UserId userId) {
+                if (userId == null) {
                     String e = loginViewModel.getErrorMsj();
                     showErrorMessage(e);
+                    return;
                 }
+                String token = loginViewModel.getRefreshToken();
+                AccountAuthenticator.setAuthToken(LoginActivity.this, token);
+                AccountAuthenticator.setUserId(LoginActivity.this, userId.getStr());
+                goMainScreen();
             }
         });
     }

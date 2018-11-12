@@ -54,15 +54,12 @@ public class HomeActivity extends AppCompatActivity {
                 switch (itemId) {
                     case R.id.user:
                         goProfileScreen();
-//                        Toast.makeText(HomeActivity.this, "User", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.account:
                         goMyAccountScreen();
-//                        Toast.makeText(HomeActivity.this, "Account", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.sell:
                         goPublischScreen();
-//                        Toast.makeText(HomeActivity.this, "Sell", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 drawer.closeDrawer(GravityCompat.START);
@@ -109,7 +106,6 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             case android.R.id.home:
                 drawer.openDrawer(GravityCompat.START);
-//                Toast.makeText(HomeActivity.this, "Navigation", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -121,15 +117,15 @@ public class HomeActivity extends AppCompatActivity {
         homeViewModel.getPublishedProduct(token).observe(this, new Observer<ArrayList<ProductItem>>() {
             @Override
             public void onChanged(@Nullable ArrayList<ProductItem> products) {
-                if (products != null) {
-                    String token = homeViewModel.getToken();
-//                    AccountAuthenticator.updateAuthToken(HomeActivity.this, token);
-                    _setupProductsGrid(products);
-                    findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-                } else {
+                if (products == null) {
                     String e = homeViewModel.getErrorMsj();
                     showMessage(e);
+                    return;
                 }
+                String token = homeViewModel.getRefreshToken();
+//                    AccountAuthenticator.updateAuthToken(HomeActivity.this, token);
+                _setupProductsGrid(products);
+                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
             }
         });
     }

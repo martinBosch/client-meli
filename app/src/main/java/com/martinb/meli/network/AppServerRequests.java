@@ -1,10 +1,14 @@
 package com.martinb.meli.network;
 
 import com.martinb.meli.model.ProductItem;
+import com.martinb.meli.network.object_request.Payment;
 import com.martinb.meli.network.object_request.Product;
 import com.martinb.meli.network.object_request.PublishRequest;
 import com.martinb.meli.network.object_request.Question;
+import com.martinb.meli.network.object_request.Unit;
 import com.martinb.meli.network.object_request.User;
+import com.martinb.meli.network.object_response.PaymentId;
+import com.martinb.meli.network.object_response.PurchaseId;
 import com.martinb.meli.network.object_response.UserId;
 
 import java.util.ArrayList;
@@ -44,4 +48,10 @@ public interface AppServerRequests {
 
     @GET("/products/{productId}/questions")
     Call<ArrayList<Question>> questions(@Header("Authorization") String token, @Path("productId") String productId);
+
+    @POST("/products/{productId}/purchases")
+    Call<PurchaseId> registerPurchase(@Header("Authorization") String token, @Path("productId") String productId, @Body Unit units);
+
+    @POST("/purchases/{purchaseId}/payments")
+    Call<PaymentId> registerPayment(@Header("Authorization") String token, @Path("purchaseId") String purchaseId, @Body Payment payment);
 }

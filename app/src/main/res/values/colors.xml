@@ -3,4 +3,7 @@
     <color name="colorPrimary">#ffdd00</color>
     <color name="colorPrimaryDark">#ffd500</color>
     <color name="colorAccent">#ffdd00</color>
+    <color name="purchase_background">#ffe666</color>
+    <color name="button_light_blue">#00aced</color>
+    <color name="background_gray">#EEEEEE</color>
 </resources>

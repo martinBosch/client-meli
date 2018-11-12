@@ -69,14 +69,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productDetailsViewModel.getProductDetails(token, productId).observe(this, new Observer<Product>() {
             @Override
             public void onChanged(@Nullable Product product) {
-                if (product != null) {
-                    String token = productDetailsViewModel.getToken();
-//                    AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
-                    _setupProductDetails(product);
-                } else {
-                    String e = productDetailsViewModel.getErrorMsj();
+                if (product == null) {
+                    String e = productDetailsViewModel.getPublicDetailsErrorMsj();
                     showMessage(e);
+                    return;
                 }
+                String token = productDetailsViewModel.getPublicDetailsToken();
+//                    AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
+                _setupProductDetails(product);
             }
         });
     }
@@ -101,7 +101,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         setupUnits(product.getUnits());
 
         TextView info_seller = findViewById(R.id.info_seller);
-        info_seller.setText("Martin Bosch");
+        info_seller.setText(product.getDisplay_name());
 
         TextView ubication_seller = findViewById(R.id.ubication_seller);
         ubication_seller.setText(product.getUbication());
@@ -132,14 +132,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productDetailsViewModel.questions(token, productId).observe(this, new Observer<ArrayList<String>>() {
             @Override
             public void onChanged(@Nullable ArrayList<String> questions) {
-                if (questions != null) {
-                    String token = productDetailsViewModel.getToken();
-//                    AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
-                    _setupQuestions(questions);
-                } else {
-                    String e = productDetailsViewModel.getErrorMsj();
+                if (questions == null) {
+                    String e = productDetailsViewModel.getQuestionErrorMsj();
                     showMessage(e);
+                    return;
                 }
+                String token = productDetailsViewModel.getQuestionToken();
+//                    AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
+                _setupQuestions(questions);
             }
         });
     }
@@ -151,18 +151,18 @@ public class ProductDetailsActivity extends AppCompatActivity {
             question_text.setPadding(0,10,0,0);
             question_text.setText(question);
             questions_layout.addView( question_text );
+            // Si la respuesta es vacia mostrar el boton de responder, sino mostrar la respuesta
+            // Ver para el app server formato de pregunta y respuesta en el json.
         }
     }
 
     public void comprar(View view) {
-        //Todo: deberia pasar un objeto que comtenga toda la info de una compra y se vaya completando
-        // a medida que avanzan las pantallas.
         Purchase purchase = new Purchase();
         purchase.setProductId(productId);
         purchase.setPrice(product.getPrice());
         Spinner amount = findViewById(R.id.cantidad);
         Integer amount_purchased = Integer.parseInt( amount.getSelectedItem().toString() );
-        purchase.setAmount(amount_purchased);
+        purchase.setUnits(amount_purchased);
 
         Intent intent = new Intent(this, PurchaseShippingMethodsActivity.class);
         intent.putExtra(PURCHASE, purchase);

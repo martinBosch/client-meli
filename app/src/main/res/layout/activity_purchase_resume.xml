@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#ffe666"
+    android:background="@color/purchase_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.purchase.PurchaseResumeActivity">
@@ -37,7 +37,7 @@
         android:id="@+id/toolbar10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffe666"
+        android:background="@color/purchase_background"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintStart_toStartOf="parent"
@@ -94,13 +94,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:text="@string/amount"
+        android:text="@string/units"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/product_title" />
 
     <TextView
-        android:id="@+id/amount"
+        android:id="@+id/units"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -218,7 +218,7 @@
         android:layout_width="319dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:background="#00aced"
+        android:background="@color/button_light_blue"
         android:onClick="confirm_purchase"
         android:text="@string/buy"
         android:textAllCaps="false"

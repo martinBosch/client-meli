@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModel;
 
 import com.martinb.meli.network.AppServerRequestFactory;
 import com.martinb.meli.network.AppServerRequests;
+import com.martinb.meli.network.callback.RegisterCallBack;
 import com.martinb.meli.network.object_request.User;
 import com.martinb.meli.network.object_response.UserId;
 
@@ -17,58 +18,23 @@ import retrofit2.Response;
 
 public class RegisterViewModel extends ViewModel {
 
-    private static final String ERROR_MSJ = "description";
+    private RegisterCallBack callBack;
 
-    private MutableLiveData<String> token = new MutableLiveData<>();
-    private String userId = null;
-    private String errorMsj = null;
-
-    public LiveData<String> signup(String email, String password, String displayName, String phone) {
+    public LiveData<UserId> signup(String email, String password, String displayName, String phone) {
         User user = new User(email, password, displayName, phone);
 
         AppServerRequests appserverRequests = AppServerRequestFactory.getInstance();
         Call<UserId> call = appserverRequests.signup(user);
-        call.enqueue(new Callback<UserId>() {
-            @Override
-            public void onResponse(Call<UserId> call, Response<UserId> response) {
-                if (response.isSuccessful()) {
-                    handleGoodRequest(response);
-                } else {
-                    handleBadRequest(response);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserId> call, Throwable t) {
-                token.setValue(null);
-                errorMsj = t.getMessage();
-            }
-        });
-        return token;
+        callBack = new RegisterCallBack();
+        call.enqueue(callBack);
+        return callBack.getData();
     }
 
-    private void handleGoodRequest(Response<UserId> response) {
-        okhttp3.Headers headers = response.headers();
-        token.setValue( headers.get("Bearer") );
-
-        userId = response.body().getUserId();
-    }
-
-    private void handleBadRequest(Response<UserId> response) {
-        token.setValue(null);
-        try {
-            JSONObject jObjError = new JSONObject(response.errorBody().string());
-            errorMsj = jObjError.getString(ERROR_MSJ);
-        } catch (Exception e) {
-            errorMsj = e.getMessage();
-        }
-    }
-
-    public String getUserId() {
-        return userId;
+    public String getRefreshToken() {
+        return callBack.getRefreshToken();
     }
 
     public String getErrorMsj() {
-        return errorMsj;
+        return callBack.getErrorMsj();
     }
 }

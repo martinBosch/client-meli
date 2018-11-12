@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.martinb.meli.R;
 import com.martinb.meli.authentication.AccountAuthenticator;
+import com.martinb.meli.network.object_response.UserId;
 import com.martinb.meli.view_model.RegisterViewModel;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -47,13 +48,13 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void signup(String email, String password, String displayName, String phone) {
-        registerViewModel.signup(email, password, displayName, phone).observe(this, new Observer<String>() {
+        registerViewModel.signup(email, password, displayName, phone).observe(this, new Observer<UserId>() {
             @Override
-            public void onChanged(@Nullable String token) {
-                if (token != null) {
+            public void onChanged(@Nullable UserId userId) {
+                if (userId != null) {
+                    String token = registerViewModel.getRefreshToken();
                     AccountAuthenticator.setAuthToken(RegisterActivity.this, token);
-                    String userId = registerViewModel.getUserId();
-                    AccountAuthenticator.setUserId(RegisterActivity.this, userId);
+                    AccountAuthenticator.setUserId(RegisterActivity.this, userId.getStr());
                     goMainScreen();
                 } else {
                     String e = registerViewModel.getErrorMsj();

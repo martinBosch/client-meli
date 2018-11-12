@@ -36,7 +36,6 @@ public class PublishProductActivity extends AppCompatActivity {
     private static final int RESULT_UPLOAD_IMAGE = 1;
     private static final String SUCCESSFUL_PUBLICATION = "Producto publicado";
 
-
     private PublishProductViewModel publishProductViewModel;
 
     private String name;
@@ -79,10 +78,8 @@ public class PublishProductActivity extends AppCompatActivity {
 
     private void setupCategory() {
         ArrayList<String> categories = new ArrayList<>();
-        categories.add("Producto");
-        categories.add("Vehiculo");
-        categories.add("Inmuebles");
-        categories.add("Servicio");
+        categories.add("Producto"); categories.add("Vehiculo");
+        categories.add("Inmuebles"); categories.add("Servicio");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 R.layout.support_simple_spinner_dropdown_item, categories);
         Spinner category = findViewById(R.id.category);
@@ -175,14 +172,14 @@ public class PublishProductActivity extends AppCompatActivity {
                 .observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String token) {
-                if (token != null) {
-                    showMessage(SUCCESSFUL_PUBLICATION);
-//                    AccountAuthenticator.updateAuthToken(PublishProductActivity.this, token);
-                    goMainScreen();
-                } else {
+                if (token == null) {
                     String e = publishProductViewModel.getErrorMsj();
                     showMessage(e);
+                    return;
                 }
+                showMessage(SUCCESSFUL_PUBLICATION);
+//                    AccountAuthenticator.updateAuthToken(PublishProductActivity.this, token);
+                goMainScreen();
             }
         });
     }
