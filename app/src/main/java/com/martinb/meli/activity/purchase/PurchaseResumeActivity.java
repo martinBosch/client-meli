@@ -55,7 +55,7 @@ public class PurchaseResumeActivity extends AppCompatActivity {
         Float price = purchase.getPrice();
         product.setText( String.format("%s", price) );
 
-        TextView amount_text = findViewById(R.id.amount);
+        TextView amount_text = findViewById(R.id.units);
         Integer amount = purchase.getUnits();
         amount_text.setText( String.format("%s", amount) );
 

@@ -70,7 +70,7 @@
     <string name="expiration_date_format">MM/AA</string>
     <string name="card_cvc">Código de seguridad</string>
     <string name="purchase_resume">Resumen de su compra</string>
-    <string name="units">Cantidad</string>
+    <string name="units_title">Cantidad</string>
     <string name="subtotal">Subtotal</string>
     <string name="shipping">Envío</string>
     <string name="total">Total</string>
@@ -78,4 +78,7 @@
     <string name="ask">Preguntar</string>
     <string name="ask_question">Escribe tu pregunta</string>
     <string name="questions">Preguntas</string>
+    <string name="editProfile">Editar perfil</string>
+    <string name="send">Send</string>
+    <string name="save">save</string>
 </resources>

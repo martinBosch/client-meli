@@ -1,6 +1,7 @@
 package com.martinb.meli.network;
 
 import com.martinb.meli.model.ProductItem;
+import com.martinb.meli.model.UserInfo;
 import com.martinb.meli.network.object_request.Payment;
 import com.martinb.meli.network.object_request.Product;
 import com.martinb.meli.network.object_request.PublishRequest;
@@ -18,6 +19,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface AppServerRequests {
@@ -42,6 +44,9 @@ public interface AppServerRequests {
 
     @GET("/users/{userId}")
     Call<User> profile(@Header("Authorization") String token, @Path("userId") String userId);
+
+    @PUT("/users/{userId}")
+    Call<Void> editProfile(@Header("Authorization") String token, @Path("userId") String userId, @Body UserInfo userInfo);
 
     @POST("/products/{productId}/questions")
     Call<Void> publishQuestion(@Header("Authorization") String token, @Path("productId") String productId,  @Body Question question);

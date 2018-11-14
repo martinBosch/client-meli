@@ -51,15 +51,14 @@ public class RegisterActivity extends AppCompatActivity {
         registerViewModel.signup(email, password, displayName, phone).observe(this, new Observer<UserId>() {
             @Override
             public void onChanged(@Nullable UserId userId) {
-                if (userId != null) {
-                    String token = registerViewModel.getRefreshToken();
-                    AccountAuthenticator.setAuthToken(RegisterActivity.this, token);
-                    AccountAuthenticator.setUserId(RegisterActivity.this, userId.getStr());
-                    goMainScreen();
-                } else {
+                if (userId == null) {
                     String e = registerViewModel.getErrorMsj();
                     showErrorMessage(e);
                 }
+                String token = registerViewModel.getRefreshToken();
+                AccountAuthenticator.setAuthToken(RegisterActivity.this, token);
+                AccountAuthenticator.setUserId(RegisterActivity.this, userId.getStr());
+                goMainScreen();
             }
         });
     }

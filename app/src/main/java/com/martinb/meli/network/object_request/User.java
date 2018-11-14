@@ -14,6 +14,8 @@ public class User {
         this.password = password;
     }
 
+    public User() {}
+
     public String getEmail() {
         return email;
     }
@@ -24,5 +26,13 @@ public class User {
 
     public String getPhone() {
         return phone;
+    }
+
+    public void setDisplay_name(String display_name) {
+        this.display_name = display_name;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
