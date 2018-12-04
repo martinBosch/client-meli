@@ -23,25 +23,7 @@ import retrofit2.Response;
 
 public class ProductDetailsViewModel extends ViewModel {
 
-    private QuestionsCallBack questionsCallBack;
     private ProductDetailsCallBack productDetailsCallBack;
-
-    public LiveData<ArrayList<String>> questions(String token, String productId) {
-        AppServerRequests appserverRequests = AppServerRequestFactory.getInstance();
-        Call<ArrayList<Question>> call = appserverRequests.questions("Bearer " + token, productId);
-        questionsCallBack = new QuestionsCallBack();
-        call.enqueue(  questionsCallBack );
-        return questionsCallBack.getData();
-    }
-
-    public String getQuestionToken() {
-        return questionsCallBack.getRefreshToken();
-    }
-
-    public String getQuestionErrorMsj() {
-        return questionsCallBack.getErrorMsj();
-    }
-
 
     public LiveData<Product> getProductDetails(String token, String productId) {
         AppServerRequests appserverRequests = AppServerRequestFactory.getInstance();

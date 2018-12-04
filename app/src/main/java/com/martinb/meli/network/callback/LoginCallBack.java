@@ -10,10 +10,10 @@ public class LoginCallBack extends BaseCallBack<UserId, UserId> {
 
     @Override
     protected void handleGoodRequest(Response<UserId> response) {
-        data.setValue( response.body() );
-
         okhttp3.Headers headers = response.headers();
         refreshToken = headers.get("Bearer");
+
+        data.setValue( response.body() );
     }
 
     public String getRefreshToken() {

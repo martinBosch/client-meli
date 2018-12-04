@@ -13,31 +13,32 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.martinb.meli.R;
-import com.martinb.meli.adapter.ProductViewHolders;
 import com.martinb.meli.authentication.AccountAuthenticator;
-import com.martinb.meli.view_model.QuestionViewModel;
+import com.martinb.meli.view_model.AnswerViewModel;
 
+import static com.martinb.meli.activity.ProductQuestionsActivity.ID_QUESTION;
 import static com.martinb.meli.adapter.ProductViewHolders.ID_PRODUCTO;
 
-public class QuestionActivity extends AppCompatActivity {
+public class AnswerActivity extends AppCompatActivity {
 
-    private QuestionViewModel questionViewModel;
+    private AnswerViewModel answerViewModel;
+    private String questionId;
     private String productId;
 
-    private static final String QUESTION_PUBLISHED = "Tu pregunta fue publicada!";
+    private static final String ANSWER_PUBLISHED = "Tu respuesta fue publicada!";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_question);
+        setContentView(R.layout.activity_answer);
 
-        this.questionViewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
+        this.answerViewModel = ViewModelProviders.of(this).get(AnswerViewModel.class);
 
         setupToolbar();
     }
 
     private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar11);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar13);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.clear);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -65,25 +66,25 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void publish() {
-        String token = AccountAuthenticator.getAuthToken(QuestionActivity.this);
+        String token = AccountAuthenticator.getAuthToken(AnswerActivity.this);
 
         Intent intent = getIntent();
-        productId = intent.getStringExtra(ID_PRODUCTO);
+        questionId = intent.getStringExtra(ID_QUESTION);
 
-        EditText question_text = findViewById(R.id.question);
-        String question = question_text.getText().toString();
+        EditText answer_text = findViewById(R.id.answer);
+        String answer = answer_text.getText().toString();
 
-        this.questionViewModel.publishQuestion(token, productId, question).observe(this, new Observer<String>() {
+        this.answerViewModel.publishAnswer(token, questionId, answer).observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String token) {
                 if (token == null) {
-                    String e = questionViewModel.getErrorMsj();
+                    String e = answerViewModel.getErrorMsj();
                     showMessage(e);
                     return;
                 }
-//                AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
-                showMessage(QUESTION_PUBLISHED);
-                goProductDetailsScreen();
+//                AccountAuthenticator.updateAuthToken(AnswerActivity.this, token);
+                showMessage(ANSWER_PUBLISHED);
+                goProductQuestionsScreen();
             }
         });
     }
@@ -92,9 +93,13 @@ public class QuestionActivity extends AppCompatActivity {
         Toast.makeText(this, msj, Toast.LENGTH_SHORT).show();
     }
 
-    private void goProductDetailsScreen() {
-        Intent intent = new Intent(this, ProductDetailsActivity.class);
-        intent.putExtra(ID_PRODUCTO, productId);
-        startActivity(intent);
+    private void goProductQuestionsScreen() {
+        Intent intent = getIntent();
+        productId = intent.getStringExtra(ID_PRODUCTO);
+
+        Intent i = new Intent(this, ProductQuestionsActivity.class);
+        i.putExtra(ID_PRODUCTO, productId);
+        startActivity(i);
     }
+
 }

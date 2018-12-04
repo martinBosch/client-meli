@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import retrofit2.Response;
 
-public class QuestionsCallBack extends BaseCallBack<ArrayList<String>, ArrayList<Question>> {
+public class QuestionsCallBack extends BaseCallBack<ArrayList<Question>, ArrayList<Question>> {
 
     private String refreshToken = null;
 
@@ -16,11 +16,12 @@ public class QuestionsCallBack extends BaseCallBack<ArrayList<String>, ArrayList
         this.refreshToken = headers.get("Bearer");
 
         ArrayList<Question> questions = response.body();
-        ArrayList<String> questions_str = new ArrayList<>();
-        for (Question question : questions) {
-            questions_str.add( question.getQuestion() );
-        }
-        this.data.setValue(questions_str);
+        this.data.setValue(questions);
+//        ArrayList<String> questions_str = new ArrayList<>();
+//        for (Question question : questions) {
+//            questions_str.add( question.getQuestion() );
+//        }
+//        this.data.setValue(questions_str);
     }
 
     public String getRefreshToken() {

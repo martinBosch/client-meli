@@ -23,7 +23,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ProductViewHolders
 
     @Override
     public ProductViewHolders onCreateViewHolder(ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.product, null);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_item, null);
         ProductViewHolders productViewHolders = new ProductViewHolders(layoutView);
         return productViewHolders;
     }
@@ -31,7 +31,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ProductViewHolders
     @Override
     public void onBindViewHolder(ProductViewHolders holder, int position) {
         ProductItem product = products.get(position);
-//        holder.image.setImageResource(product.getEncodedThumbnail());
+//        holder.image.setImageResource(product_item.getEncodedThumbnail());
         holder.image.setImageBitmap(product.getThumbnail());
         holder.price.setText( String.format("$ %s", product.getPrice()) );
         holder.title.setText(product.getTitle());

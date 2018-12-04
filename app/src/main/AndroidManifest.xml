@@ -78,7 +78,9 @@
         <activity android:name=".activity.purchase.PurchasePaymentCardActivity" />
         <activity android:name=".activity.purchase.PurchaseResumeActivity" />
         <activity android:name=".activity.QuestionActivity" />
-        <activity android:name=".activity.ProfileEditActivity"></activity>
+        <activity android:name=".activity.ProfileEditActivity" />
+        <activity android:name=".activity.ProductQuestionsActivity" />
+        <activity android:name=".activity.AnswerActivity"></activity>
     </application>
 
 </manifest>

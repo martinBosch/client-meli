@@ -2,6 +2,7 @@ package com.martinb.meli.network;
 
 import com.martinb.meli.model.ProductItem;
 import com.martinb.meli.model.UserInfo;
+import com.martinb.meli.network.object_request.Answer;
 import com.martinb.meli.network.object_request.Payment;
 import com.martinb.meli.network.object_request.Product;
 import com.martinb.meli.network.object_request.PublishRequest;
@@ -50,6 +51,9 @@ public interface AppServerRequests {
 
     @POST("/products/{productId}/questions")
     Call<Void> publishQuestion(@Header("Authorization") String token, @Path("productId") String productId,  @Body Question question);
+
+    @POST("/questions/{questionId}/answers")
+    Call<Void> publishAnswer(@Header("Authorization") String token, @Path("questionId") String questionId,  @Body Answer answer);
 
     @GET("/products/{productId}/questions")
     Call<ArrayList<Question>> questions(@Header("Authorization") String token, @Path("productId") String productId);

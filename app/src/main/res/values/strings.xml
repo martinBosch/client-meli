@@ -81,4 +81,7 @@
     <string name="editProfile">Editar perfil</string>
     <string name="send">Send</string>
     <string name="save">save</string>
+    <string name="questions_button">Preguntas  ></string>
+    <string name="answer">Responder</string>
+    <string name="ask_answer">Escribe tu respuesta</string>
 </resources>

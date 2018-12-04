@@ -2,16 +2,22 @@ package com.martinb.meli.activity;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.AttrRes;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,12 +26,19 @@ import com.martinb.meli.R;
 import com.martinb.meli.activity.purchase.PurchaseShippingMethodsActivity;
 import com.martinb.meli.adapter.GalleryAdapter;
 import com.martinb.meli.adapter.ProductViewHolders;
+import com.martinb.meli.adapter.QuestionAdapter;
 import com.martinb.meli.authentication.AccountAuthenticator;
 import com.martinb.meli.model.Purchase;
 import com.martinb.meli.network.object_request.Product;
+import com.martinb.meli.network.object_request.Question;
 import com.martinb.meli.view_model.ProductDetailsViewModel;
 
+import org.w3c.dom.Attr;
+
 import java.util.ArrayList;
+import java.util.jar.Attributes;
+
+import static com.martinb.meli.adapter.ProductViewHolders.ID_PRODUCTO;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
@@ -33,6 +46,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private String productId;
     private Product product;
+    private Context context = this;
 
     public static final String PURCHASE = "purchase";
 
@@ -44,7 +58,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         this.productDetailsViewModel = ViewModelProviders.of(this).get(ProductDetailsViewModel.class);
 
         Intent intent = getIntent();
-        productId = intent.getStringExtra(ProductViewHolders.ID_PRODUCTO);
+        productId = intent.getStringExtra(ID_PRODUCTO);
 
         setupToolbar();
         setupQuestions(productId);
@@ -127,33 +141,16 @@ public class ProductDetailsActivity extends AppCompatActivity {
         cantidad.setAdapter(adapter);
     }
 
-    private void setupQuestions(String productId) {
-        String token = AccountAuthenticator.getAuthToken(ProductDetailsActivity.this);
-        productDetailsViewModel.questions(token, productId).observe(this, new Observer<ArrayList<String>>() {
+    private void setupQuestions(final String productId) {
+        TextView question = findViewById(R.id.questions_title);
+        question.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable ArrayList<String> questions) {
-                if (questions == null) {
-                    String e = productDetailsViewModel.getQuestionErrorMsj();
-                    showMessage(e);
-                    return;
-                }
-                String token = productDetailsViewModel.getQuestionToken();
-//                    AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
-                _setupQuestions(questions);
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProductQuestionsActivity.class);
+                intent.putExtra(ID_PRODUCTO, productId);
+                startActivity(intent);
             }
         });
-    }
-
-    private void _setupQuestions(ArrayList<String> questions) {
-        LinearLayout questions_layout = findViewById(R.id.questions);
-        for(String question : questions) {
-            TextView question_text = new TextView(this);
-            question_text.setPadding(0,10,0,0);
-            question_text.setText(question);
-            questions_layout.addView( question_text );
-            // Si la respuesta es vacia mostrar el boton de responder, sino mostrar la respuesta
-            // Ver para el app server formato de pregunta y respuesta en el json.
-        }
     }
 
     public void comprar(View view) {
@@ -171,7 +168,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     public void ask(View view) {
         Intent intent = new Intent(this, QuestionActivity.class);
-        intent.putExtra(ProductViewHolders.ID_PRODUCTO, productId);
+        intent.putExtra(ID_PRODUCTO, productId);
         startActivity(intent);
     }
 
