@@ -6,6 +6,7 @@ public class User {
     private String display_name;
     private String phone;
     private String password;
+    private String registration_id;
 
     public User(String email, String password, String displayName, String phone) {
         this.email = email;
@@ -34,5 +35,9 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public void setRegistrationId(String firebaseToken) {
+        this.registration_id = firebaseToken;
     }
 }

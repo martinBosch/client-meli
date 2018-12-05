@@ -61,6 +61,18 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" /> <!-- We haven't defined this -->
         </service>
+        <service android:name=".model.MeliFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/notification_icon" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorPrimaryDark" />
 
         <activity
             android:name=".activity.HomeActivity"
@@ -80,7 +92,8 @@
         <activity android:name=".activity.QuestionActivity" />
         <activity android:name=".activity.ProfileEditActivity" />
         <activity android:name=".activity.ProductQuestionsActivity" />
-        <activity android:name=".activity.AnswerActivity"></activity>
+        <activity android:name=".activity.AnswerActivity" />
+        <activity android:name=".activity.ChatActivity"></activity>
     </application>
 
 </manifest>

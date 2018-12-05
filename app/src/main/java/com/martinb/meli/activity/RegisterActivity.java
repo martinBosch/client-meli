@@ -12,12 +12,14 @@ import android.widget.Toast;
 
 import com.martinb.meli.R;
 import com.martinb.meli.authentication.AccountAuthenticator;
+import com.martinb.meli.network.object_request.User;
 import com.martinb.meli.network.object_response.UserId;
 import com.martinb.meli.view_model.RegisterViewModel;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private RegisterViewModel registerViewModel;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,20 +46,39 @@ public class RegisterActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString();
 
         AccountAuthenticator.createAccount(this, email, password);
-        signup(email, password, name + " " + lastName, phone);
+        this.user = new User(email, password, name + " " + lastName, phone);
+        getFirebaseToken();
     }
 
-    private void signup(String email, String password, String displayName, String phone) {
-        registerViewModel.signup(email, password, displayName, phone).observe(this, new Observer<UserId>() {
+    private void getFirebaseToken() {
+        registerViewModel.getFirebaseToken().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String firebaseToken) {
+                if (firebaseToken == null) {
+                    String e = registerViewModel.getFirebaseErrorMsj();
+                    showErrorMessage(e);
+                    return;
+                }
+                user.setRegistrationId(firebaseToken);
+                signup();
+            }
+        });
+
+    }
+
+    private void signup() {
+        registerViewModel.signup(user).observe(this, new Observer<UserId>() {
             @Override
             public void onChanged(@Nullable UserId userId) {
                 if (userId == null) {
                     String e = registerViewModel.getErrorMsj();
                     showErrorMessage(e);
+                    return;
                 }
                 String token = registerViewModel.getRefreshToken();
                 AccountAuthenticator.setAuthToken(RegisterActivity.this, token);
                 AccountAuthenticator.setUserId(RegisterActivity.this, userId.getStr());
+                AccountAuthenticator.setUsername(RegisterActivity.this, user.getDisplayName());
                 goMainScreen();
             }
         });

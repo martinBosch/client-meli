@@ -18,6 +18,7 @@ import com.facebook.login.widget.LoginButton;
 import com.martinb.meli.R;
 import com.martinb.meli.authentication.AccountAuthenticator;
 import com.martinb.meli.model.FacebookManager;
+import com.martinb.meli.network.object_request.User;
 import com.martinb.meli.network.object_response.UserId;
 import com.martinb.meli.view_model.LoginViewModel;
 
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private LoginButton loginFbButton;
     private CallbackManager callbackManager;
     private LoginViewModel loginViewModel;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +88,27 @@ public class LoginActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString();
 
         AccountAuthenticator.createAccount(this, email, password);
+        this.user = new User(email, password, null, null);
+        getFirebaseToken();
+    }
 
-        loginViewModel.login(email, password).observe(this, new Observer<UserId>() {
+    private void getFirebaseToken() {
+        loginViewModel.getFirebaseToken().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String firebaseToken) {
+                if (firebaseToken == null) {
+                    String e = loginViewModel.getFirebaseErrorMsj();
+                    showErrorMessage(e);
+                    return;
+                }
+                user.setRegistrationId(firebaseToken);
+                _loginWithEmail();
+            }
+        });
+    }
+
+    private void _loginWithEmail() {
+        loginViewModel.login(user).observe(this, new Observer<UserId>() {
             @Override
             public void onChanged(@Nullable UserId userId) {
                 if (userId == null) {

@@ -84,4 +84,6 @@
     <string name="questions_button">Preguntas  ></string>
     <string name="answer">Responder</string>
     <string name="ask_answer">Escribe tu respuesta</string>
+    <string name="chat">Chat</string>
+    <string name="write_message">Escribe un mensaje</string>
 </resources>

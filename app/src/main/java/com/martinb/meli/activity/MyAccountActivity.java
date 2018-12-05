@@ -47,7 +47,8 @@ public class MyAccountActivity extends AppCompatActivity {
         my_shopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MyAccountActivity.this, "Mis compras", Toast.LENGTH_SHORT).show();
+                goChatScreen();
+//                Toast.makeText(MyAccountActivity.this, "Mis compras", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -70,6 +71,11 @@ public class MyAccountActivity extends AppCompatActivity {
 
     private void goProfileScreen() {
         Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    private void goChatScreen() {
+        Intent intent = new Intent(this, ChatActivity.class);
         startActivity(intent);
     }
 }

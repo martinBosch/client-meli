@@ -11,12 +11,12 @@ import com.martinb.meli.model.ProductItem;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<ProductViewHolders> {
+public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductViewHolders> {
 
     private List<ProductItem> products;
     private Context context;
 
-    public RecyclerViewAdapter(Context context, List<ProductItem> products) {
+    public ProductRecyclerViewAdapter(Context context, List<ProductItem> products) {
         this.products = products;
         this.context = context;
     }

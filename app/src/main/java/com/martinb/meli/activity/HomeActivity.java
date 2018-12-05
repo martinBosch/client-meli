@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,13 +13,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.martinb.meli.R;
-import com.martinb.meli.adapter.RecyclerViewAdapter;
+import com.martinb.meli.adapter.ProductRecyclerViewAdapter;
 import com.martinb.meli.authentication.AccountAuthenticator;
 import com.martinb.meli.model.ProductItem;
 import com.martinb.meli.view_model.HomeViewModel;
@@ -42,6 +48,22 @@ public class HomeActivity extends AppCompatActivity {
         setupToolbar();
         setupNavigationDrawer();
         setupProductsGrid();
+        firebase();
+    }
+
+    private void firebase() {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (task.isSuccessful()) {
+                    String token = task.getResult().getToken();
+                    Log.d("Firebase", token);
+                } else {
+                    showMessage(task.getException().getMessage());
+                }
+            }
+        });
     }
 
     private void setupNavigationDrawer() {
@@ -136,7 +158,7 @@ public class HomeActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(recyclerViewLayoutManager);
-        RecyclerViewAdapter recyclerAdapter = new RecyclerViewAdapter(HomeActivity.this, products);
+        ProductRecyclerViewAdapter recyclerAdapter = new ProductRecyclerViewAdapter(HomeActivity.this, products);
         recyclerView.setAdapter(recyclerAdapter);
     }
 
