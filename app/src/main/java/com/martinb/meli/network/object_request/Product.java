@@ -13,6 +13,8 @@ public class Product {
     private ArrayList<String> images;
     private String category;
     private String ubication;
+    private Double latitude;
+    private Double longitude;
     private int units;
 
     private String owner_id;
@@ -21,13 +23,16 @@ public class Product {
     private ArrayList<Bitmap> desencodedImages;
 
     public Product(String name, String description, ArrayList<String> images,
-                   float price, String category, String ubication, int units) {
+                   float price, String category, String ubication, Double latitude,
+                   Double longitude, int units) {
         this.name = name;
         this.description = description;
         this.images = images;
         this.price = price;
         this.category = category;
         this.ubication = ubication;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.units = units;
     }
 

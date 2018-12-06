@@ -18,6 +18,8 @@ import com.martinb.meli.authentication.AccountAuthenticator;
 import com.martinb.meli.model.UserInfo;
 import com.martinb.meli.view_model.ProfileEditViewModel;
 
+import es.dmoral.toasty.Toasty;
+
 import static com.martinb.meli.activity.ProfileActivity.USER_INFO;
 
 public class ProfileEditActivity extends AppCompatActivity {
@@ -76,7 +78,7 @@ public class ProfileEditActivity extends AppCompatActivity {
             public void onChanged(@Nullable String token) {
                 if (token == null) {
                     String e = profileEditViewModel.getErrorMsj();
-                    showMessage(e);
+                    showErrorMessage(e);
                     return;
                 }
 //                AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
@@ -114,7 +116,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         phone.setText(userInfo.getPhone());
     }
 
-    private void showMessage(String msj) {
-        Toast.makeText(this, msj, Toast.LENGTH_SHORT).show();
+    private void showErrorMessage(String msj) {
+        Toasty.error(this, msj, Toast.LENGTH_SHORT, true).show();
     }
 }

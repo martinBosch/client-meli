@@ -17,6 +17,8 @@ import com.martinb.meli.adapter.ProductViewHolders;
 import com.martinb.meli.authentication.AccountAuthenticator;
 import com.martinb.meli.view_model.QuestionViewModel;
 
+import es.dmoral.toasty.Toasty;
+
 import static com.martinb.meli.adapter.ProductViewHolders.ID_PRODUCTO;
 
 public class QuestionActivity extends AppCompatActivity {
@@ -78,18 +80,22 @@ public class QuestionActivity extends AppCompatActivity {
             public void onChanged(@Nullable String token) {
                 if (token == null) {
                     String e = questionViewModel.getErrorMsj();
-                    showMessage(e);
+                    showErrorMessage(e);
                     return;
                 }
 //                AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
-                showMessage(QUESTION_PUBLISHED);
+                showSuccessMessage(QUESTION_PUBLISHED);
                 goProductDetailsScreen();
             }
         });
     }
 
-    private void showMessage(String msj) {
-        Toast.makeText(this, msj, Toast.LENGTH_SHORT).show();
+    private void showSuccessMessage(String msj) {
+        Toasty.success(this, msj, Toast.LENGTH_SHORT, true).show();
+    }
+
+    private void showErrorMessage(String msj) {
+        Toasty.error(this, msj, Toast.LENGTH_SHORT, true).show();
     }
 
     private void goProductDetailsScreen() {

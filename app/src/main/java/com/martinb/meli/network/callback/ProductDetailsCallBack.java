@@ -31,5 +31,4 @@ public class ProductDetailsCallBack extends BaseCallBack<Product, Product> {
     public String getRefreshToken() {
         return refreshToken;
     }
-
 }

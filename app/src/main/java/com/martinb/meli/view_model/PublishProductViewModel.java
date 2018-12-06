@@ -23,10 +23,11 @@ public class PublishProductViewModel extends ViewModel {
     private ProductPublishCallBack callback;
 
     public LiveData<String> publish(final String token, String name, String description,
-                                     ArrayList<String> images, float price,
-                                     String category, String ubication, int units) {
+                                     ArrayList<String> images, float price, String category,
+                                    String ubication, Double latitude, Double longitude, int units) {
 
-        Product product = new Product(name, description, images, price, category, ubication, units);
+        Product product = new Product(name, description, images, price, category,
+                ubication, latitude, longitude, units);
 
         AppServerRequests appserverRequests = AppServerRequestFactory.getInstance();
         Call<Void> call = appserverRequests.publish("Bearer " + token, new PublishRequest(product));

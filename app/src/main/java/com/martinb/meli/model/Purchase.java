@@ -1,8 +1,11 @@
 package com.martinb.meli.model;
 
 import com.martinb.meli.network.object_request.Payment;
+import com.martinb.meli.network.object_request.Ubication;
 
 import java.io.Serializable;
+
+import static com.martinb.meli.activity.purchase.PurchaseShippingMethodsActivity.DELIVERY;
 
 public class Purchase implements Serializable {
 
@@ -12,12 +15,12 @@ public class Purchase implements Serializable {
 
     private String shipping_method;
     private String destination_address;
-    private String destination_latitude;
-    private String destination_longitude;
+    private Double destination_latitude;
+    private Double destination_longitude;
     private Float delivery_cost;
 
     private String payment_method;
-    private Integer card_number;
+    private String card_number;
     private String card_holder;
     private String expiration_date;
     private Integer card_cvc;
@@ -41,15 +44,19 @@ public class Purchase implements Serializable {
         return shipping_method;
     }
 
+    public boolean isDelivery() {
+        return shipping_method.equals(DELIVERY);
+    }
+
     public String getDestination_address() {
         return destination_address;
     }
 
-    public String getDestination_latitude() {
+    public Double getDestination_latitude() {
         return destination_latitude;
     }
 
-    public String getDestination_longitude() {
+    public Double getDestination_longitude() {
         return destination_longitude;
     }
 
@@ -61,7 +68,7 @@ public class Purchase implements Serializable {
         return payment_method;
     }
 
-    public Integer getCard_number() {
+    public String getCard_number() {
         return card_number;
     }
 
@@ -97,11 +104,11 @@ public class Purchase implements Serializable {
         this.destination_address = destination_address;
     }
 
-    public void setDestination_latitude(String destination_latitude) {
+    public void setDestination_latitude(Double destination_latitude) {
         this.destination_latitude = destination_latitude;
     }
 
-    public void setDestination_longitude(String destination_longitude) {
+    public void setDestination_longitude(Double destination_longitude) {
         this.destination_longitude = destination_longitude;
     }
 
@@ -113,7 +120,7 @@ public class Purchase implements Serializable {
         this.payment_method = payment_method;
     }
 
-    public void setCard_number(Integer card_number) {
+    public void setCard_number(String card_number) {
         this.card_number = card_number;
     }
 
@@ -136,5 +143,9 @@ public class Purchase implements Serializable {
 
         return new Payment(this.payment_method, this.card_number, this.card_holder,
                 expiration_year, expiration_month, this.card_cvc);
+    }
+
+    public Ubication getUbication() {
+        return new Ubication(this.destination_address, this.destination_latitude, this.destination_longitude);
     }
 }

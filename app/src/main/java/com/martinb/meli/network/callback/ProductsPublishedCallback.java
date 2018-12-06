@@ -21,8 +21,10 @@ public class ProductsPublishedCallback extends BaseCallBack<ArrayList<ProductIte
 
         ArrayList<ProductItem> products = response.body();
         for (ProductItem product : products) {
-            Bitmap image = ImageManager.getDecodeImage(product.getEncodedThumbnail());
-            product.setThumbnail(image);
+            if (product.haveThunbnail()) {
+                Bitmap image = ImageManager.getDecodeImage(product.getEncodedThumbnail());
+                product.setThumbnail(image);
+            }
         }
         this.data.setValue(products);
     }

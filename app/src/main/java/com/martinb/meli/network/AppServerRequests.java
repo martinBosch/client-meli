@@ -7,8 +7,10 @@ import com.martinb.meli.network.object_request.Payment;
 import com.martinb.meli.network.object_request.Product;
 import com.martinb.meli.network.object_request.PublishRequest;
 import com.martinb.meli.network.object_request.Question;
+import com.martinb.meli.network.object_request.Ubication;
 import com.martinb.meli.network.object_request.Unit;
 import com.martinb.meli.network.object_request.User;
+import com.martinb.meli.network.object_response.DeliveryCost;
 import com.martinb.meli.network.object_response.PaymentId;
 import com.martinb.meli.network.object_response.PurchaseId;
 import com.martinb.meli.network.object_response.UserId;
@@ -22,6 +24,7 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface AppServerRequests {
 
@@ -63,4 +66,10 @@ public interface AppServerRequests {
 
     @POST("/purchases/{purchaseId}/payments")
     Call<PaymentId> registerPayment(@Header("Authorization") String token, @Path("purchaseId") String purchaseId, @Body Payment payment);
+
+    @POST("/purchases/{purchaseId}/deliveries")
+    Call<Void> registerDelivery(@Header("Authorization") String token, @Path("purchaseId") String purchaseId, @Body Ubication ubication);
+
+    @GET("/products/{productId}/deliveries/estimate")
+    Call<DeliveryCost> estimateDeliveryCost(@Header("Authorization") String token, @Path("productId") String productId, @Query("destination_address") String adress, @Query("destination_latitude") Double latitude, @Query("destination_longitude") Double longitude);
 }

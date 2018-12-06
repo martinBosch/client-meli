@@ -15,8 +15,8 @@ public class PurchaseShippingMethodsActivity extends AppCompatActivity {
 
     private Purchase purchase;
 
-    private static final String LOCAL = "local";
-    private static final String DELIVERY = "delivery";
+    public static final String LOCAL = "local";
+    public static final String DELIVERY = "delivery";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,6 @@ public class PurchaseShippingMethodsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //Todo: Aca deberia llamar a un end point que me diga cuanto sale el costo de envio.
     public void shipping_home(View view) {
         purchase.setShipping_method(DELIVERY);
         Intent intent = new Intent(this, PurchaseDeliveryHomeActivity.class);

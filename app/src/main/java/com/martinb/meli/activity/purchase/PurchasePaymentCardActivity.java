@@ -45,13 +45,11 @@ public class PurchasePaymentCardActivity extends AppCompatActivity {
         Intent i = new Intent(this, PurchaseResumeActivity.class);
         i.putExtra(PURCHASE, purchase);
         startActivity(i);
-
-//        Toast.makeText(PurchasePaymentCardActivity.this, "Card payment", Toast.LENGTH_SHORT).show();
     }
 
     private void loadPurchasePayment(Purchase purchase) {
         EditText card_number_text = findViewById(R.id.number_card);
-        Integer card_number = Integer.parseInt( card_number_text.getText().toString() );
+        String card_number = card_number_text.getText().toString();
 
         EditText card_holder_text = findViewById(R.id.card_holder);
         String card_holder = card_holder_text.getText().toString();

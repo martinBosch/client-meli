@@ -6,7 +6,7 @@ public class ProductItem {
 
     private String name;
     private String price;
-    private String thumbnail;
+    private String thumbnail = null;
     private String _id;
 
     private Bitmap thumbnail_decoded;
@@ -32,6 +32,10 @@ public class ProductItem {
 
     public String getTitle() {
         return name;
+    }
+
+    public boolean haveThunbnail() {
+        return thumbnail != null;
     }
 
     public void setThumbnail(Bitmap thumbnail_decoded) {

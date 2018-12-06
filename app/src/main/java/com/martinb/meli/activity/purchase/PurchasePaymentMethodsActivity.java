@@ -45,7 +45,6 @@ public class PurchasePaymentMethodsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 goPaymentCardScreen(CREDIT);
-//                Toast.makeText(PurchasePaymentMethodsActivity.this, "Credit card", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -54,7 +53,6 @@ public class PurchasePaymentMethodsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 goPaymentCardScreen(DEBIT);
-//                Toast.makeText(PurchasePaymentMethodsActivity.this, "Debit card", Toast.LENGTH_SHORT).show();
             }
         });
     }

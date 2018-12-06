@@ -22,6 +22,7 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.model.LatLng;
 import com.martinb.meli.R;
 import com.martinb.meli.adapter.GalleryPublishAdapter;
 import com.martinb.meli.authentication.AccountAuthenticator;
@@ -31,10 +32,12 @@ import com.martinb.meli.view_model.PublishProductViewModel;
 
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
+
 public class PublishProductActivity extends AppCompatActivity {
 
     private static final int RESULT_UPLOAD_IMAGE = 1;
-    private static final String SUCCESSFUL_PUBLICATION = "Producto publicado";
+    private static final String SUCCESSFUL_PUBLICATION = "Tu producto fue publicado!";
 
     private PublishProductViewModel publishProductViewModel;
 
@@ -45,6 +48,8 @@ public class PublishProductActivity extends AppCompatActivity {
     private String category;
     private int units;
     private String ubication;
+    private Double latitude;
+    private Double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,11 +99,14 @@ public class PublishProductActivity extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                 ubication = place.getAddress().toString();
+                LatLng location = place.getLatLng();
+                latitude = location.latitude;
+                longitude = location.longitude;
             }
 
             @Override
             public void onError(Status status) {
-                showMessage(status.getStatusMessage());
+                showErrorMessage(status.getStatusMessage());
             }
         });
     }
@@ -168,24 +176,29 @@ public class PublishProductActivity extends AppCompatActivity {
         String token = AccountAuthenticator.getAuthToken(PublishProductActivity.this);
 
         publishProductViewModel.publish(token, this.name, this.description, this.encoded_images,
-                                        this.price, this.category, this.ubication, this.units)
+                                        this.price, this.category, this.ubication, this.latitude,
+                                        this.longitude, this.units)
                 .observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String token) {
                 if (token == null) {
                     String e = publishProductViewModel.getErrorMsj();
-                    showMessage(e);
+                    showErrorMessage(e);
                     return;
                 }
-                showMessage(SUCCESSFUL_PUBLICATION);
+                showSuccessMessage(SUCCESSFUL_PUBLICATION);
 //                    AccountAuthenticator.updateAuthToken(PublishProductActivity.this, token);
                 goMainScreen();
             }
         });
     }
 
-    private void showMessage(String msj) {
-        Toast.makeText(this, msj, Toast.LENGTH_SHORT).show();
+    private void showSuccessMessage(String msj) {
+        Toasty.success(this, msj, Toast.LENGTH_SHORT, true).show();
+    }
+
+    private void showErrorMessage(String msj) {
+        Toasty.error(this, msj, Toast.LENGTH_SHORT, true).show();
     }
 
     public void goMainScreen() {

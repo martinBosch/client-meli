@@ -31,6 +31,8 @@ import com.martinb.meli.view_model.HomeViewModel;
 
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
+
 public class HomeActivity extends AppCompatActivity {
 
     private HomeViewModel homeViewModel;
@@ -48,19 +50,18 @@ public class HomeActivity extends AppCompatActivity {
         setupToolbar();
         setupNavigationDrawer();
         setupProductsGrid();
-        firebase();
+        setupFirebase();
     }
 
-    private void firebase() {
+    private void setupFirebase() {
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
             @Override
             public void onComplete(@NonNull Task<InstanceIdResult> task) {
                 if (task.isSuccessful()) {
                     String token = task.getResult().getToken();
-                    Log.d("Firebase", token);
                 } else {
-                    showMessage(task.getException().getMessage());
+                    showErrorMessage(task.getException().getMessage());
                 }
             }
         });
@@ -141,7 +142,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onChanged(@Nullable ArrayList<ProductItem> products) {
                 if (products == null) {
                     String e = homeViewModel.getErrorMsj();
-                    showMessage(e);
+                    showErrorMessage(e);
                     return;
                 }
                 String token = homeViewModel.getRefreshToken();
@@ -172,7 +173,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private void showMessage(String msj) {
-        Toast.makeText(this, msj, Toast.LENGTH_SHORT).show();
+    private void showErrorMessage(String msj) {
+        Toasty.error(this, msj, Toast.LENGTH_SHORT, true).show();
     }
 }

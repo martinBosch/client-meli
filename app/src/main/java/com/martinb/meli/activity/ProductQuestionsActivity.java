@@ -23,6 +23,8 @@ import com.martinb.meli.view_model.ProductQuestionViewModel;
 
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
+
 import static com.martinb.meli.adapter.ProductViewHolders.ID_PRODUCTO;
 
 public class ProductQuestionsActivity extends AppCompatActivity {
@@ -67,7 +69,7 @@ public class ProductQuestionsActivity extends AppCompatActivity {
             public void onChanged(@Nullable ArrayList<Question> questions) {
                 if (questions == null) {
                     String e = productQuestionViewModel.getQuestionErrorMsj();
-                    showMessage(e);
+                    showErrorMessage(e);
                     return;
                 }
                 String token = productQuestionViewModel.getQuestionToken();
@@ -100,7 +102,7 @@ public class ProductQuestionsActivity extends AppCompatActivity {
         });
     }
 
-    private void showMessage(String msj) {
-        Toast.makeText(this, msj, Toast.LENGTH_SHORT).show();
+    private void showErrorMessage(String msj) {
+        Toasty.error(this, msj, Toast.LENGTH_SHORT, true).show();
     }
 }

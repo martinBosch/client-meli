@@ -38,6 +38,8 @@ import org.w3c.dom.Attr;
 import java.util.ArrayList;
 import java.util.jar.Attributes;
 
+import es.dmoral.toasty.Toasty;
+
 import static com.martinb.meli.adapter.ProductViewHolders.ID_PRODUCTO;
 
 public class ProductDetailsActivity extends AppCompatActivity {
@@ -85,7 +87,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             public void onChanged(@Nullable Product product) {
                 if (product == null) {
                     String e = productDetailsViewModel.getPublicDetailsErrorMsj();
-                    showMessage(e);
+                    showErrorMessage(e);
                     return;
                 }
                 String token = productDetailsViewModel.getPublicDetailsToken();
@@ -172,7 +174,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void showMessage(String msj) {
-        Toast.makeText(this, msj, Toast.LENGTH_SHORT).show();
+    private void showErrorMessage(String msj) {
+        Toasty.error(this, msj, Toast.LENGTH_SHORT, true).show();
     }
 }

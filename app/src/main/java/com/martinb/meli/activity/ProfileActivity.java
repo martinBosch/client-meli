@@ -19,6 +19,8 @@ import com.martinb.meli.model.UserInfo;
 import com.martinb.meli.network.object_request.User;
 import com.martinb.meli.view_model.ProfileViewModel;
 
+import es.dmoral.toasty.Toasty;
+
 public class ProfileActivity extends AppCompatActivity {
 
     private ProfileViewModel profileViewModel;
@@ -73,7 +75,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onChanged(@Nullable User user) {
                 if (user == null) {
                     String e = profileViewModel.getErrorMsj();
-                    showMessage(e);
+                    showErrorMessage(e);
                     return;
                 }
                 String token = profileViewModel.getToken();
@@ -110,7 +112,7 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void showMessage(String msj) {
-        Toast.makeText(this, msj, Toast.LENGTH_SHORT).show();
+    private void showErrorMessage(String msj) {
+        Toasty.error(this, msj, Toast.LENGTH_SHORT, true).show();
     }
 }

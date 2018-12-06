@@ -24,6 +24,8 @@ import com.martinb.meli.view_model.LoginViewModel;
 
 import java.util.Arrays;
 
+import es.dmoral.toasty.Toasty;
+
 public class LoginActivity extends AppCompatActivity {
 
     private LoginButton loginFbButton;
@@ -124,8 +126,8 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void showErrorMessage(String e) {
-        Toast.makeText(this, e, Toast.LENGTH_SHORT).show();
+    private void showErrorMessage(String msj) {
+        Toasty.error(this, msj, Toast.LENGTH_SHORT, true).show();
     }
 
     private void goMainScreen() {

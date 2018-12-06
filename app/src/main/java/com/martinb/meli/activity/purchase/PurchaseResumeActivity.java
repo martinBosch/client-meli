@@ -12,13 +12,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.martinb.meli.R;
+import com.martinb.meli.activity.HomeActivity;
 import com.martinb.meli.authentication.AccountAuthenticator;
 import com.martinb.meli.model.Purchase;
 import com.martinb.meli.view_model.PurchaseViewModel;
 
+import es.dmoral.toasty.Toasty;
+
 import static com.martinb.meli.activity.ProductDetailsActivity.PURCHASE;
 
 public class PurchaseResumeActivity extends AppCompatActivity {
+
+    private static final String PURCHASE_CONFIRM_MSG = "Tu compra se realizo con exito";
 
     private PurchaseViewModel purchaseViewModel;
     private Purchase purchase;
@@ -73,43 +78,68 @@ public class PurchaseResumeActivity extends AppCompatActivity {
     }
 
     public void confirm_purchase(View view) {
-//        Toast.makeText(PurchaseResumeActivity.this, "Compraste", Toast.LENGTH_SHORT).show();
         String token = AccountAuthenticator.getAuthToken(PurchaseResumeActivity.this);
         purchaseViewModel.registerPurchase(token, purchase.getProductId(), purchase.getUnits()).observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String purchaseId) {
                 if (purchaseId == null) {
-                    String e = purchaseViewModel.getRegisterPurchaseErrorMsj();
-                    showMessage(e);
+                    String e = purchaseViewModel.getPurchaseErrorMsj();
+                    showErrorMessage(e);
                     return;
                 }
+                String token = purchaseViewModel.getPurchaseToken();
+//                AccountAuthenticator.updateAuthToken(PurchaseResumeActivity.this, token);
+                if (purchase.isDelivery()) {
+                    register_delivery(token, purchaseId);
+                } else {
+                    register_payment(token, purchaseId);
+                }
+            }
+        });
+    }
 
-                String token = purchaseViewModel.getRegisterPurchaseToken();
+    private void register_delivery(String token, final String purchaseId) {
+        purchaseViewModel.registerDelivery(token, purchaseId, purchase.getUbication()).observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String token) {
+                if (token == null) {
+                    String e = purchaseViewModel.getDeliveryErrorMsj();
+                    showErrorMessage(e);
+                    return;
+                }
 //                AccountAuthenticator.updateAuthToken(PurchaseResumeActivity.this, token);
                 register_payment(token, purchaseId);
             }
         });
     }
 
-    public void register_payment(String token, String purchaseId) {
+    private void register_payment(String token, final String purchaseId) {
         purchaseViewModel.registerPayment(token, purchaseId, purchase.getPayment()).observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String paymentId) {
                 if (paymentId == null) {
-                    String e = purchaseViewModel.getRegisterPaymentErrorMsj();
-                    showMessage(e);
+                    String e = purchaseViewModel.getPaymentErrorMsj();
+                    showErrorMessage(e);
                     return;
                 }
-
-                String token = purchaseViewModel.getRegisterPaymentToken();
+                String token = purchaseViewModel.getPaymentToken();
 //                AccountAuthenticator.updateAuthToken(PurchaseResumeActivity.this, token);
-                //Todo: hacer algo con el paymentId o sino devolver Void.
+                showSuccessMessage(PURCHASE_CONFIRM_MSG);
+                goHomeScreen();
             }
         });
-
     }
 
-    private void showMessage(String msj) {
-        Toast.makeText(this, msj, Toast.LENGTH_SHORT).show();
+    private void showSuccessMessage(String msj) {
+        Toasty.success(this, msj, Toast.LENGTH_SHORT, true).show();
+    }
+
+    private void showErrorMessage(String msj) {
+        Toasty.error(this, msj, Toast.LENGTH_SHORT, true).show();
+    }
+
+    private void goHomeScreen() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
     }
 }
