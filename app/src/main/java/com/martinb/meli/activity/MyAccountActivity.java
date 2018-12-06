@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.martinb.meli.R;
+import com.martinb.meli.view_model.MySalesViewModel;
 
 public class MyAccountActivity extends AppCompatActivity {
 
@@ -47,8 +48,7 @@ public class MyAccountActivity extends AppCompatActivity {
         my_shopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goChatScreen();
-//                Toast.makeText(MyAccountActivity.this, "Mis compras", Toast.LENGTH_SHORT).show();
+                goMyPurchases();
             }
         });
 
@@ -56,7 +56,7 @@ public class MyAccountActivity extends AppCompatActivity {
         my_sells.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MyAccountActivity.this, "Mis ventas", Toast.LENGTH_SHORT).show();
+                goMySales();
             }
         });
 
@@ -69,13 +69,18 @@ public class MyAccountActivity extends AppCompatActivity {
         });
     }
 
-    private void goProfileScreen() {
-        Intent intent = new Intent(this, ProfileActivity.class);
+    private void goMyPurchases() {
+        Intent intent = new Intent(this, MyPurchasesActivity.class);
         startActivity(intent);
     }
 
-    private void goChatScreen() {
-        Intent intent = new Intent(this, ChatActivity.class);
+    private void goMySales() {
+        Intent intent = new Intent(this, MySalesActivity.class);
+        startActivity(intent);
+    }
+
+    private void goProfileScreen() {
+        Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
     }
 }
