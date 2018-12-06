@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "948960211454",
+    "firebase_url": "https://meli-4620b.firebaseio.com",
+    "project_id": "meli-4620b",
+    "storage_bucket": "meli-4620b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948960211454:android:78efa525bfb897d9",
+        "android_client_info": {
+          "package_name": "com.martinb.meli"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948960211454-hr0if0tjmm78c63k7gd7a7b1m317pe20.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.martinb.meli",
+            "certificate_hash": "2fc30edbf723b4b9f7bd0df96acae2741156be71"
+          }
+        },
+        {
+          "client_id": "948960211454-qqoknff878iojhvqqva7r32q527cq1da.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0hqxZ0xpDMJ3-FFgQvyKUF1hDszNqj_8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948960211454-qqoknff878iojhvqqva7r32q527cq1da.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
