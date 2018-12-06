@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
@@ -28,6 +29,8 @@ public class PurchaseDeliveryHomeActivity extends AppCompatActivity {
 
     Purchase purchase;
     private DeliveryViewModel deliveryViewModel;
+
+    private TextView deliveryCostText;
 
     private String ubication;
     private Double latitude;
@@ -56,6 +59,9 @@ public class PurchaseDeliveryHomeActivity extends AppCompatActivity {
     }
 
     private void setupDeliveryDestination() {
+        deliveryCostText = findViewById(R.id.delivery_cost);
+        deliveryCostText.setText("$ 0.0");
+
         PlaceAutocompleteFragment placeAutocomplete = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.delivery_direccion);
 
@@ -83,6 +89,9 @@ public class PurchaseDeliveryHomeActivity extends AppCompatActivity {
     }
 
     private void estimateDeliveryCost() {
+        String costCalculate = "Calculando...";
+        deliveryCostText.setText(costCalculate);
+
         String token = AccountAuthenticator.getAuthToken(this);
         deliveryViewModel.estimateDeliveryCost(token, purchase.getProductId(),
                 ubication, latitude, longitude).observe(this, new Observer<Float>() {
@@ -94,8 +103,10 @@ public class PurchaseDeliveryHomeActivity extends AppCompatActivity {
                     return;
                 }
                 String token = deliveryViewModel.getDeliveryToken();
-//                    AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
+                AccountAuthenticator.updateAuthToken(PurchaseDeliveryHomeActivity.this, token);
                 cost = delivery_cost;
+                String costText = "$ " + cost;
+                deliveryCostText.setText(costText);
             }
         });
     }

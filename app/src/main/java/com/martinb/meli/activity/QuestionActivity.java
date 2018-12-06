@@ -83,7 +83,7 @@ public class QuestionActivity extends AppCompatActivity {
                     showErrorMessage(e);
                     return;
                 }
-//                AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
+                AccountAuthenticator.updateAuthToken(QuestionActivity.this, token);
                 showSuccessMessage(QUESTION_PUBLISHED);
                 goProductDetailsScreen();
             }

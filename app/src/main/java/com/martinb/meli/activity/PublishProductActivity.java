@@ -113,10 +113,6 @@ public class PublishProductActivity extends AppCompatActivity {
 
     public void onCheckboxClicked(View view) {
         boolean checked = ((CheckBox) view).isChecked();
-
-        //Todo: guardar los items selecionados en una lista.
-
-        // Check which checkbox was clicked
         switch(view.getId()) {
             case R.id.credit_card:
                 if (checked) {}
@@ -187,7 +183,7 @@ public class PublishProductActivity extends AppCompatActivity {
                     return;
                 }
                 showSuccessMessage(SUCCESSFUL_PUBLICATION);
-//                    AccountAuthenticator.updateAuthToken(PublishProductActivity.this, token);
+                AccountAuthenticator.updateAuthToken(PublishProductActivity.this, token);
                 goMainScreen();
             }
         });

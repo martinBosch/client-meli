@@ -91,7 +91,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     return;
                 }
                 String token = productDetailsViewModel.getPublicDetailsToken();
-//                    AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
+                AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
                 _setupProductDetails(product);
             }
         });

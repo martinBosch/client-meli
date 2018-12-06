@@ -146,7 +146,7 @@ public class HomeActivity extends AppCompatActivity {
                     return;
                 }
                 String token = homeViewModel.getRefreshToken();
-//                    AccountAuthenticator.updateAuthToken(HomeActivity.this, token);
+                AccountAuthenticator.updateAuthToken(HomeActivity.this, token);
                 _setupProductsGrid(products);
                 findViewById(R.id.loadingPanel).setVisibility(View.GONE);
             }

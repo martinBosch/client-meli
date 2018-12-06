@@ -64,7 +64,7 @@ public class MySalesActivity extends AppCompatActivity {
                     return;
                 }
                 String token = mySalesViewModel.getMyPurchasesToken();
-//                    AccountAuthenticator.updateAuthToken(MyPurchasesActivity.this, token);
+                AccountAuthenticator.updateAuthToken(MySalesActivity.this, token);
                 _setupMySales(mySales);
 
             }

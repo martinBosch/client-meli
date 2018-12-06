@@ -88,7 +88,7 @@ public class PurchaseResumeActivity extends AppCompatActivity {
                     return;
                 }
                 String token = purchaseViewModel.getPurchaseToken();
-//                AccountAuthenticator.updateAuthToken(PurchaseResumeActivity.this, token);
+                AccountAuthenticator.updateAuthToken(PurchaseResumeActivity.this, token);
                 if (purchase.isDelivery()) {
                     register_delivery(token, purchaseId);
                 } else {
@@ -107,7 +107,7 @@ public class PurchaseResumeActivity extends AppCompatActivity {
                     showErrorMessage(e);
                     return;
                 }
-//                AccountAuthenticator.updateAuthToken(PurchaseResumeActivity.this, token);
+                AccountAuthenticator.updateAuthToken(PurchaseResumeActivity.this, token);
                 register_payment(token, purchaseId);
             }
         });
@@ -123,7 +123,7 @@ public class PurchaseResumeActivity extends AppCompatActivity {
                     return;
                 }
                 String token = purchaseViewModel.getPaymentToken();
-//                AccountAuthenticator.updateAuthToken(PurchaseResumeActivity.this, token);
+                AccountAuthenticator.updateAuthToken(PurchaseResumeActivity.this, token);
                 showSuccessMessage(PURCHASE_CONFIRM_MSG);
                 goHomeScreen();
             }

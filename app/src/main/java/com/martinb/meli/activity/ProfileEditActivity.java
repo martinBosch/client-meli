@@ -81,7 +81,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                     showErrorMessage(e);
                     return;
                 }
-//                AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
+                AccountAuthenticator.updateAuthToken(ProfileEditActivity.this, token);
                 goProfileScreen();
             }
         });
