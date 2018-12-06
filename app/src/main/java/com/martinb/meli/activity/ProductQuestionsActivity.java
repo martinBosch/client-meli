@@ -73,7 +73,7 @@ public class ProductQuestionsActivity extends AppCompatActivity {
                     return;
                 }
                 String token = productQuestionViewModel.getQuestionToken();
-//                    AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
+                AccountAuthenticator.updateAuthToken(ProductQuestionsActivity.this, token);
                 _setupQuestions(questions);
             }
         });

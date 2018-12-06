@@ -11,6 +11,8 @@ public class MyActivitiesViewHolder extends RecyclerView.ViewHolder {
 
     public TextView productName;
     public TextView price_units;
+    public TextView deliveryStatus;
+    public TextView paymentStatus;
     private String _id;
 
     public MyActivitiesViewHolder(@NonNull View itemView) {
@@ -18,6 +20,8 @@ public class MyActivitiesViewHolder extends RecyclerView.ViewHolder {
 
         productName = itemView.findViewById(R.id.product_name);
         price_units = itemView.findViewById(R.id.price_units);
+        deliveryStatus = itemView.findViewById(R.id.delivery_status);
+        paymentStatus = itemView.findViewById(R.id.payment_status);
     }
 
     public void setId(String _id) {

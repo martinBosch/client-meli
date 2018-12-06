@@ -41,6 +41,10 @@ public class MyActivitiesAdapter extends RecyclerView.Adapter<MyActivitiesViewHo
         String price_units = "$ " + Float.toString(myPurchase.getValue())
                 + " (" + Integer.toString(myPurchase.getUnits()) + " unidades" + ")";
         holder.price_units.setText(price_units);
+        String deliveryStatus = "Estado del delivery: " + myPurchase.getDeliveryStatus();
+        holder.deliveryStatus.setText(deliveryStatus);
+        String paymentStatus = "Estado del pago: " + myPurchase.getPaymentStatus();
+        holder.paymentStatus.setText(paymentStatus);
         holder.setId(myPurchase.getActivityId());
     }
 

@@ -79,7 +79,7 @@ public class ProfileActivity extends AppCompatActivity {
                     return;
                 }
                 String token = profileViewModel.getToken();
-//                    AccountAuthenticator.updateAuthToken(ProductDetailsActivity.this, token);
+                AccountAuthenticator.updateAuthToken(ProfileActivity.this, token);
                 _setupUserProfile(user);
             }
         });

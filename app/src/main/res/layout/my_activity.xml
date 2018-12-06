@@ -25,7 +25,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingStart="5dp"
-                android:textSize="24sp"/>
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/delivery_status"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="5dp"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/payment_status"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="5dp"
+                android:textSize="18sp"/>
 
             <TextView
                 android:layout_width="match_parent"

@@ -87,4 +87,5 @@
     <string name="chat">Chat</string>
     <string name="write_message">Escribe un mensaje</string>
     <string name="send_message"><![CDATA[Enviar mensage  >]]></string>
+    <string name="delivery_cost">Costo del envío:</string>
 </resources>
