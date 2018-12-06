@@ -79,4 +79,7 @@ public interface AppServerRequests {
 
     @GET("/mysales")
     Call<ArrayList<MyActivity>> mySales(@Header("Authorization") String token);
+
+    @GET("/products/search")
+    Call<ArrayList<ProductItem>> search(@Header("Authorization") String token, @Query("name") String name, @Query("description") String description);
 }

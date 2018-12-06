@@ -26,7 +26,6 @@ public class HomeViewModel extends ViewModel {
     public LiveData<ArrayList<ProductItem>> getPublishedProduct(String token) {
         AppServerRequests appserverRequests = AppServerRequestFactory.getInstance();
         Call<ArrayList<ProductItem>> call = appserverRequests.productsPublished("Bearer " + token);
-
         callback = new ProductsPublishedCallback();
         call.enqueue( callback );
         return callback.getData();

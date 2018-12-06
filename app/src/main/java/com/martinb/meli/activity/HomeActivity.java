@@ -124,8 +124,7 @@ public class HomeActivity extends AppCompatActivity {
         int itemId = item.getItemId();
         switch(itemId) {
             case R.id.search:
-                //Manejar search
-                Toast.makeText(HomeActivity.this, "Search", Toast.LENGTH_SHORT).show();
+                goSearchScreen();
                 return true;
             case android.R.id.home:
                 drawer.openDrawer(GravityCompat.START);
@@ -171,6 +170,11 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void goSearchScreen() {
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
     }
 
     private void showErrorMessage(String msj) {
