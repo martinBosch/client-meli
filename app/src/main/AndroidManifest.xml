@@ -95,7 +95,9 @@
         <activity android:name=".activity.AnswerActivity" />
         <activity android:name=".activity.ChatActivity" />
         <activity android:name=".activity.MyPurchasesActivity" />
-        <activity android:name=".activity.MySalesActivity"></activity>
+        <activity android:name=".activity.MySalesActivity" />
+        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.SearchResultsActivity"></activity>
     </application>
 
 </manifest>
