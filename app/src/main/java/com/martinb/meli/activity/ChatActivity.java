@@ -1,12 +1,12 @@
 package com.martinb.meli.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,19 +18,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.martinb.meli.R;
-import com.martinb.meli.adapter.ChatMsgRecyclerViewAdapter;
+import com.martinb.meli.adapter.ChatMsgAdapter;
 import com.martinb.meli.authentication.AccountAuthenticator;
 import com.martinb.meli.model.ChatMessage;
 
-import java.util.ArrayList;
 import java.util.Date;
 
-import static java.security.AccessController.getContext;
+import static com.martinb.meli.activity.MyPurchasesActivity.CHAT_ID;
 
 public class ChatActivity extends AppCompatActivity {
 
     private Context context = this;
-    private ChatMsgRecyclerViewAdapter chatAdapter;
+    private ChatMsgAdapter chatAdapter;
     private DatabaseReference dbReference;
 
     @Override
@@ -40,7 +39,10 @@ public class ChatActivity extends AppCompatActivity {
 
         setupToolbar();
         setupChatMessages();
-        setupConnection();
+
+        Intent intent = getIntent();
+        String chatId = intent.getStringExtra(CHAT_ID);
+        setupConnection(chatId);
         setupMsgInput();
     }
 
@@ -60,16 +62,13 @@ public class ChatActivity extends AppCompatActivity {
     private void setupChatMessages() {
         RecyclerView chat = findViewById(R.id.chat_messages);
         chat.setLayoutManager(new LinearLayoutManager(this));
-        chatAdapter = new ChatMsgRecyclerViewAdapter(this);
+        chatAdapter = new ChatMsgAdapter(this);
         chat.setAdapter(chatAdapter);
     }
 
-    private void setupConnection() {
-        //Todo: Aca deberia ir el id de la compra
-        String DATABASE_NAME = "Meli";
-
+    private void setupConnection(String chatId) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        dbReference = database.getReference(DATABASE_NAME);
+        dbReference = database.getReference(chatId);
 
         dbReference.addValueEventListener(new ValueEventListener() {
             @Override

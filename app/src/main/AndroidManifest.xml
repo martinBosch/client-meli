@@ -93,7 +93,9 @@
         <activity android:name=".activity.ProfileEditActivity" />
         <activity android:name=".activity.ProductQuestionsActivity" />
         <activity android:name=".activity.AnswerActivity" />
-        <activity android:name=".activity.ChatActivity"></activity>
+        <activity android:name=".activity.ChatActivity" />
+        <activity android:name=".activity.MyPurchasesActivity" />
+        <activity android:name=".activity.MySalesActivity"></activity>
     </application>
 
 </manifest>

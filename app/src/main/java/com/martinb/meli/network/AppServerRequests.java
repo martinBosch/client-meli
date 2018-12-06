@@ -11,6 +11,7 @@ import com.martinb.meli.network.object_request.Ubication;
 import com.martinb.meli.network.object_request.Unit;
 import com.martinb.meli.network.object_request.User;
 import com.martinb.meli.network.object_response.DeliveryCost;
+import com.martinb.meli.network.object_response.MyActivity;
 import com.martinb.meli.network.object_response.PaymentId;
 import com.martinb.meli.network.object_response.PurchaseId;
 import com.martinb.meli.network.object_response.UserId;
@@ -72,4 +73,10 @@ public interface AppServerRequests {
 
     @GET("/products/{productId}/deliveries/estimate")
     Call<DeliveryCost> estimateDeliveryCost(@Header("Authorization") String token, @Path("productId") String productId, @Query("destination_address") String adress, @Query("destination_latitude") Double latitude, @Query("destination_longitude") Double longitude);
+
+    @GET("/mypurchases")
+    Call<ArrayList<MyActivity>> myPurchases(@Header("Authorization") String token);
+
+    @GET("/mysales")
+    Call<ArrayList<MyActivity>> mySales(@Header("Authorization") String token);
 }

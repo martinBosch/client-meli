@@ -13,12 +13,12 @@ import com.martinb.meli.model.ChatMessage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatMsgRecyclerViewAdapter extends RecyclerView.Adapter<ChatMsgViewHolder> {
+public class ChatMsgAdapter extends RecyclerView.Adapter<ChatMsgViewHolder> {
 
     private List<ChatMessage> chatMessages = new ArrayList<>();
     private Context context;
 
-    public ChatMsgRecyclerViewAdapter(Context context) {
+    public ChatMsgAdapter(Context context) {
         this.context = context;
     }
 
